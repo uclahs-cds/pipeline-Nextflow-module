@@ -1,0 +1,32 @@
+name: remove_intermediate_files
+
+description: Deletes input files from disk
+
+tools:
+  - rm:
+      description: Linux command for file deletion
+      documentation: https://www.gnu.org/software/coreutils/manual/html_node/rm-invocation.html
+      licence: GPLv3+
+  - readlink:
+      description: Linux command for reading value of symbolic links
+      documentation: https://www.gnu.org/software/coreutils/manual/html_node/readlink-invocation.html
+      licence: GPLv3+
+
+input:
+  - file_to_remove:
+      type: path
+      description: any file to be deleted
+  - ready_for_deletion_signal:
+      type: val
+      description: |
+        signal to indicate that the input file can be safely deleted
+        and is no longer needed by other processes
+
+output:
+  - <log files>:
+      type: file
+      description: process log files saved to log directory
+      pattern: ".command.*"
+
+authors:
+  - Yash Patel
