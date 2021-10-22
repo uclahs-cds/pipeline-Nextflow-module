@@ -3,7 +3,7 @@
 
 - [Overview](#overview)
 - [Available Modules](#available-modules)
-  - [module-1](#module-1)
+  - [Intermediate file removal](#intermediate-file-removal)
 - [License](#License)
 
 
@@ -13,15 +13,31 @@ A set of Nextflow modules commonly used across pipelines.
 
 ## Available Modules
 
-### Module 1
+### Intermediate file removal
 
 #### Description
 
-Provide description of what module does, what tools are used, and what inputs and parameters are available
+Module for deleting intermediate files from disk as they're no longer needed by downstream processes. Symbolic links are followed to the actual file and both are deleted.
+
+Tools used: GNU `rm` and `readlink`.
+
+Inputs:
+  - file_to_remove: path to file to be deleted
+  - ready_for_deletion_signal: val to indicate that file is no longer needed by any processes
+
+Parameters:
+  - output_dir: directory for storing outputs
+  - log_output_dir: directory for storing log files
+  - save_intermediate_files: boolean indicating whether this process should run (disable when intermediate files need to be kept)
+  - docker_image: docker image within which process will run. The default is: `blcdsdockerregistry/validate:2.1.5`
+  - process_label: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
 
 #### How to use
 
-Provide steps for adding module to pipelines
+1. Add this repository as a submodule in the pipeline of interest
+2. Include the `remove_intermediate_files` process from the module `main.nf` with a relative path
+3. Use the `addParams` directive when importing to specify any params
+4. Call the process with the inputs where needed
 
 
 ## License
