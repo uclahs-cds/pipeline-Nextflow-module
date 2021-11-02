@@ -39,6 +39,31 @@ Parameters:
 3. Use the `addParams` directive when importing to specify any params
 4. Call the process with the inputs where needed
 
+### Genomic interval extraction
+
+#### Description
+
+Module for extracting the genome intervals from a reference genome dictionary.
+
+Tools used: GNU `grep`, `cut`, and `sed`.
+
+Inputs:
+  - reference_dict: path to reference genome dictionary
+
+Parameters:
+  - output_dir: directory for storing outputs
+  - log_output_dir: directory for storing log files
+  - save_intermediate_files: boolean indicating whether the extracted intervals should be copied to the output directory
+  - docker_image: docker image within which process will run. The default is: `blcdsdockerregistry/validate:2.1.5`
+  - process_label: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
+
+#### How to use
+
+1. Add this repository as a submodule in the pipeline of interest
+2. Include the `extract_GenomeIntervals` process from the module `main.nf` with a relative path
+3. Use the `addParams` directive when importing to specify any params
+4. Call the process with the inputs where needed
+
 
 ## License
 
