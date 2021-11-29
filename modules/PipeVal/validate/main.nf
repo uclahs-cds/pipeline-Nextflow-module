@@ -8,7 +8,7 @@ options = initOptions(params.options)
 
     input:
         mode: string identifying type of validation
-        file_to_validate: path to file to validate
+        file_to_validate: path to file or directory to validate
         
     params:
         params.log_output_dir: string(path)
