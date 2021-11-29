@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Added
 - Intermediate file removal module
 - Genome interval extraction module
+- PipeVal validation module
 
 ### Changed
 - Initial pipeline set up.
