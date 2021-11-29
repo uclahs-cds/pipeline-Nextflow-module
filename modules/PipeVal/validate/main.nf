@@ -28,11 +28,11 @@ process run_validate_PipeVal {
 
     output:
         path(".command.*")
-        path("input_validation.txt"), emit: val_file
+        path("validation.txt"), emit: val_file
 
     script:
     """
     set -euo pipefail
-    python3 -m validate -t ${mode} ${file_to_validate} > 'input_validation.txt'
+    python3 -m validate -t ${mode} ${file_to_validate} > 'validation.txt'
     """
 }
