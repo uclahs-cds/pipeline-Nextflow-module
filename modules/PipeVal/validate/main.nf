@@ -28,7 +28,8 @@ process run_validate_PipeVal {
 
     output:
         path(".command.*")
-        path("validation.txt"), emit: val_file
+        path("validation.txt"), emit: validation_result
+        path(file_to_validate), emit: validated_file
 
     script:
     """
