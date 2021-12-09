@@ -85,6 +85,7 @@ Parameters:
   - log_output_dir: directory for storing log files
   - docker_image_version: PipeVal docker image version within which process will run. The default is: `2.1.6`
   - process_label: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
+  - main_process: Set output directory to the specified main process instead of `PipeVal-2.1.6 `
 
 ##### How to use
 

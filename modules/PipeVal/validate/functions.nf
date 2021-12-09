@@ -12,5 +12,6 @@ def initOptions(Map args) {
     options.docker_image_version    = args.docker_image_version ?: '2.1.6'
     options.docker_image            = "blcdsdockerregistry/pipeval:${options.docker_image_version}"
     options.process_label           = args.containsKey('process_label') ? args.process_label : 'none'
+    options.main_process            = args.main_process ? args.main_process : ''
     return options
 }
