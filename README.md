@@ -4,6 +4,9 @@
 - [Overview](#overview)
 - [Available Modules](#available-modules)
   - [Intermediate file removal](#intermediate-file-removal)
+  - [Genomic interval extraction](#genomic-interval-extraction)
+  - [PipeVal](#pipeval)
+    - [Validate](#validate)
 - [License](#License)
 
 
@@ -63,6 +66,34 @@ Parameters:
 2. Include the `extract_GenomeIntervals` process from the module `main.nf` with a relative path
 3. Use the `addParams` directive when importing to specify any params
 4. Call the process with the inputs where needed
+
+### PipeVal
+
+#### Validate
+
+##### Description
+
+Module for validating files and directories using PipeVal
+
+Tools used: `PipeVal`.
+
+Inputs:
+  - mode: string identifying type of validation
+  - file_to_validate: path for file or directory to validate
+
+Parameters:
+  - log_output_dir: directory for storing log files
+  - docker_image_version: PipeVal docker image version within which process will run. The default is: `2.1.6`
+  - process_label: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
+  - main_process: Set output directory to the specified main process instead of `PipeVal-2.1.6 `
+
+##### How to use
+
+1. Add this repository as a submodule in the pipeline of interest
+2. Include the `run_validate_PipeVal` process from the module `main.nf` with a relative path
+3. Use the `addParams` directive when importing to specify any params
+4. Call the process with the inputs where needed
+5. Aggregate and save the output validation files as needed
 
 
 ## License
