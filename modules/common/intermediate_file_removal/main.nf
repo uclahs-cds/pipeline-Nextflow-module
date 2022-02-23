@@ -19,10 +19,10 @@ process remove_intermediate_files {
     container options.docker_image
     label options.process_label
 
-    publishDir path: "${options.log_output_dir}/process-log",
+    publishDir path: "${options.log_output_dir}",
       pattern: ".command.*",
       mode: "copy",
-      saveAs: { "${task.process.replace(':', '/')}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
+      saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
     input:
     path(file_to_remove)
