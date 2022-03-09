@@ -38,11 +38,17 @@ process remove_intermediate_files {
     """
     set -euo pipefail
 
+    echo "Disk usage before deletion: "
+    df -h ${workDir}
+
     if [[ -L ${file_to_remove} ]]
     then
         rm `readlink -f ${file_to_remove}`
     fi
     
     rm ${file_to_remove}
+
+    echo "Disk usage after deletion: "
+    df -h ${workDir}
     """
 }
