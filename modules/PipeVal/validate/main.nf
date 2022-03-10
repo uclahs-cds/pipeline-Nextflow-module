@@ -23,7 +23,7 @@ process run_validate_PipeVal {
         },
         pattern: ".command.*",
         mode: "copy",
-        saveAs: { "${task.process.replace(':','/')}-${task.index}/log${file(it).getName()}" }
+        saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
     input:
         tuple val(mode), path(file_to_validate)
