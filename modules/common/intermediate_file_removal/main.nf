@@ -44,6 +44,7 @@ process remove_intermediate_files {
     if [[ -L ${file_to_remove} ]]
     then
       real_path_to_remove="`readlink -f ${file_to_remove}`"
+      unlink "${file_to_remove}"
     else
       real_path_to_remove="${file_to_remove}"
     fi
