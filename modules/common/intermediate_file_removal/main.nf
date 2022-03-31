@@ -14,6 +14,7 @@ options = initOptions(params.options)
     params:
         params.log_output_dir: string(path)
         params.save_intermediate_files: bool.
+        params.remove_directories: bool. Should `remove_intermediate_files` attempt to recursively remove directories?
 */
 process remove_intermediate_files {
     container options.docker_image
