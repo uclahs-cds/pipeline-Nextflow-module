@@ -53,8 +53,7 @@ process remove_intermediate_files {
       rm -r "\$real_path_to_remove"
     elif [[ -d "\$real_path_to_remove" && ${options.remove_directories} -ne 1  ]]
     then
-      echo "\$real_path_to_remove is a directory but 'remove_directories' option is unset or is false."
-      exit 1
+      echo "Warning: \$real_path_to_remove is a directory but 'remove_directories' option is unset or is false."
     else
       rm "\$real_path_to_remove"
     fi
