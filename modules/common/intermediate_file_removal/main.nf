@@ -43,10 +43,21 @@ process remove_intermediate_files {
 
     if [[ -L ${file_to_remove} ]]
     then
-        rm `readlink -f ${file_to_remove}`
+      real_path_to_remove="`readlink -f ${file_to_remove}`"
+    else
+      real_path_to_remove="${file_to_remove}"
     fi
-    
-    rm ${file_to_remove}
+  
+    if [[ -d "\$real_path_to_remove" && ${options.remove_directories} -eq 1 ]]
+    then
+      rm -r "\$real_path_to_remove"
+    elif [[ -d "\$real_path_to_remove" && ${options.remove_directories} -ne 1  ]]
+    then
+      echo "\$real_path_to_remove is a directory but 'remove_directories' option is unset or is false."
+      exit 1
+    else
+      rm "\$real_path_to_remove"
+    fi
 
     echo "Disk usage after deletion: "
     df -h ${workDir}

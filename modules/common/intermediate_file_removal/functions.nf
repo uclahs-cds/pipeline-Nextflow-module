@@ -13,5 +13,6 @@ def initOptions(Map args) {
     options.save_intermediate_files = args.containsKey('save_intermediate_files') ? args.save_intermediate_files : true
     options.docker_image            = args.docker_image ?: 'blcdsdockerregistry/pipeval:2.1.6'
     options.process_label           = args.containsKey('process_label') ? args.process_label : 'none'
+    options.remove_directories      = args.remove_directories ? 1 : 0
     return options
 }
