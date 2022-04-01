@@ -49,12 +49,7 @@ process remove_intermediate_files {
       real_path_to_remove="${file_to_remove}"
     fi
   
-    if [[ -d "\$real_path_to_remove" ]]
-    then
-      rm -r "\$real_path_to_remove"
-    else
-      rm "\$real_path_to_remove"
-    fi
+    rm -r "\$real_path_to_remove"
 
     echo "Disk usage after deletion: "
     df -h ${workDir}
