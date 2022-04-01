@@ -14,7 +14,6 @@ options = initOptions(params.options)
     params:
         params.log_output_dir: string(path)
         params.save_intermediate_files: bool.
-        params.remove_directories: bool. Should `remove_intermediate_files` attempt to recursively remove directories?
 */
 process remove_intermediate_files {
     container options.docker_image
@@ -50,12 +49,9 @@ process remove_intermediate_files {
       real_path_to_remove="${file_to_remove}"
     fi
   
-    if [[ -d "\$real_path_to_remove" && ${options.remove_directories} -eq 1 ]]
+    if [[ -d "\$real_path_to_remove" ]]
     then
       rm -r "\$real_path_to_remove"
-    elif [[ -d "\$real_path_to_remove" && ${options.remove_directories} -ne 1  ]]
-    then
-      echo "Warning: \$real_path_to_remove is a directory but 'remove_directories' option is unset or is false."
     else
       rm "\$real_path_to_remove"
     fi
