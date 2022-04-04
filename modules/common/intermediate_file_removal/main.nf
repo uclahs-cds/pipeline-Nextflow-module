@@ -43,10 +43,13 @@ process remove_intermediate_files {
 
     if [[ -L ${file_to_remove} ]]
     then
-        rm `readlink -f ${file_to_remove}`
+      real_path_to_remove="`readlink -f ${file_to_remove}`"
+      unlink "${file_to_remove}"
+    else
+      real_path_to_remove="${file_to_remove}"
     fi
-    
-    rm ${file_to_remove}
+  
+    rm -r "\$real_path_to_remove"
 
     echo "Disk usage after deletion: "
     df -h ${workDir}
