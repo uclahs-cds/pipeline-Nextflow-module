@@ -14,11 +14,16 @@ options = initOptions(params.options)
         params.save_intermediate_files: bool.
 */
 
-process index_file_tabix {
-    container params.docker_image_samtools
+process index_VCF_tabix {
+    container options.docker_image_samtools
     publishDir path: "${params.workflow_output_dir}/output",
                mode: "copy",
-               pattern: "*.{tbi,bai,csi}"
+               pattern: "*.{tbi,csi}"
+               enabled: !options.save_intermediate_files
+    publishDir path: "${params.workflow_output_dir}/intermediate/${task.process.replace(':', '/')}",
+               mode: "copy",
+               pattern: "*.{tbi,csi}"
+               enabled: options.save_intermediate_files
     publishDir path: "${params.workflow_output_log_dir}",
                mode: "copy",
                pattern: ".command.*",
@@ -28,7 +33,7 @@ process index_file_tabix {
     path file_to_index
 
     output:
-    path "*.{tbi,bai,csi}", emit: index
+    path "*.{tbi,csi}", emit: index
     path ".command.*"
 
     script:
