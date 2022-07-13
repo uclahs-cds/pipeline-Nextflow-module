@@ -16,15 +16,15 @@ options = initOptions(params.options)
 
 process index_VCF_tabix {
     container options.docker_image
-    publishDir path: "${params.workflow_output_dir}/output",
+    publishDir path: "${options.workflow_output_dir}/output",
                mode: "copy",
                pattern: "*.{tbi,csi}",
                enabled: options.save_output_files
-    publishDir path: "${params.workflow_output_dir}/intermediate/${task.process.replace(':', '/')}",
+    publishDir path: "${options.workflow_output_dir}/intermediate/${task.process.replace(':', '/')}",
                mode: "copy",
                pattern: "*.{tbi,csi}",
                enabled: options.save_intermediate_files
-    publishDir path: "${params.workflow_log_output_dir}",
+    publishDir path: "${options.workflow_log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
                saveAs: { "${task.process.replace(':', '/')}/log${file(it).getName()}" }
