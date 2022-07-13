@@ -15,16 +15,16 @@ options = initOptions(params.options)
 */
 
 process index_VCF_tabix {
-    container options.docker_image_samtools
+    container options.docker_image
     publishDir path: "${params.workflow_output_dir}/output",
                mode: "copy",
-               pattern: "*.{tbi,csi}"
-               enabled: !options.save_intermediate_files
+               pattern: "*.{tbi,csi}",
+               enabled: options.save_output_files
     publishDir path: "${params.workflow_output_dir}/intermediate/${task.process.replace(':', '/')}",
                mode: "copy",
-               pattern: "*.{tbi,csi}"
+               pattern: "*.{tbi,csi}",
                enabled: options.save_intermediate_files
-    publishDir path: "${params.workflow_output_log_dir}",
+    publishDir path: "${params.workflow_log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
                saveAs: { "${task.process.replace(':', '/')}/log${file(it).getName()}" }
@@ -39,6 +39,6 @@ process index_VCF_tabix {
     script:
     """
     set -euo pipefail
-    tabix -p \$(basename $file_to_index .gz | tail -c 4) $file_to_index
+    tabix ${options.extra_args} -p \$(basename $file_to_index .gz | tail -c 4) $file_to_index
     """
 }
