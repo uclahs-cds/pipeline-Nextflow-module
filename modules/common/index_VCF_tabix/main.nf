@@ -9,22 +9,22 @@ options = initOptions(params.options)
     input:
         sequencing file: path to files
     params:
-        params.workflow_output_dir: string(path)
-        params.workflow_output_dir: string(path)
+        params.output_dir: string(path)
+        params.output_dir: string(path)
         params.save_intermediate_files: bool.
 */
 
 process index_VCF_tabix {
     container options.docker_image
-    publishDir path: "${options.workflow_output_dir}/output",
+    publishDir path: "${options.output_dir}/output",
                mode: "copy",
                pattern: "*.{tbi,csi}",
-               enabled: options.save_output_files
-    publishDir path: "${options.workflow_output_dir}/intermediate/${task.process.replace(':', '/')}",
+               enabled: options.is_output_file
+    publishDir path: "${options.output_dir}/intermediate/${task.process.replace(':', '/')}",
                mode: "copy",
                pattern: "*.{tbi,csi}",
-               enabled: options.save_intermediate_files
-    publishDir path: "${options.workflow_log_output_dir}",
+               enabled: !options.is_output_file && options.save_intermediate_files
+    publishDir path: "${options.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
                saveAs: { "${task.process.replace(':', '/')}/log${file(it).getName()}" }
