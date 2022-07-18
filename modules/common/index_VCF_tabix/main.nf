@@ -27,13 +27,13 @@ process index_VCF_tabix {
     publishDir path: "${options.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
 
     input:
-    path file_to_index
+    tuple val(id), path(file_to_index)
 
     output:
-    path "*.{tbi,csi}", emit: index
+    tuple val(id), path("*.{tbi,csi}"), emit: index
     path ".command.*"
 
     script:
