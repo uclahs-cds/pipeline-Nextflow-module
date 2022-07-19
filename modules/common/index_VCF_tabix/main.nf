@@ -4,25 +4,26 @@ params.options = [:]
 options = initOptions(params.options)
 
 /*
-    Nextflow module for index sequencing files, including: gff, bed, sam, vcf.
+    Nextflow module for index VCF files, including: gff and vcf.
 
     input:
-        sequencing file: path to files
+        sequencing file: path to the VCF file
+        id: string identifying the sample_id of the indexed VCF
     params:
-        params.output_dir: string(path)
-        params.output_dir: string(path)
-        params.save_intermediate_files: bool.
+        output_dir: string(path)
+        log_output_dir: string(path)
+        save_intermediate_files: bool.
 */
 
 process index_VCF_tabix {
     container options.docker_image
     publishDir path: "${options.output_dir}/output",
                mode: "copy",
-               pattern: "*.{tbi,csi}",
+               pattern: "*.tbi",
                enabled: options.is_output_file
     publishDir path: "${options.output_dir}/intermediate/${task.process.replace(':', '/')}",
                mode: "copy",
-               pattern: "*.{tbi,csi}",
+               pattern: "*.tbi",
                enabled: !options.is_output_file && options.save_intermediate_files
     publishDir path: "${options.log_output_dir}",
                mode: "copy",
@@ -33,7 +34,7 @@ process index_VCF_tabix {
     tuple val(id), path(file_to_index)
 
     output:
-    tuple val(id), path("*.{tbi,csi}"), emit: index
+    tuple val(id), path("*.tbi"), emit: index
     path ".command.*"
 
     script:

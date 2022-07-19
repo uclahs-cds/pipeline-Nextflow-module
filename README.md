@@ -7,7 +7,7 @@
   - [Genomic interval extraction](#genomic-interval-extraction)
   - [PipeVal](#pipeval)
     - [Validate](#validate)
-  - [Index sequencing file](#index-sequencing-file)
+  - [Index VCF file](#index-vcf-file)
 - [License](#License)
 
 
@@ -100,10 +100,11 @@ Parameters:
 ##### Description
 Module for indexing VCF/GFF files, including uncompressed and compressed *.vcf and *.gff,  using `tabix`.
 
-Tools used: `SAMtools`.
+Tools used: `tabix`.
 
 Inputs:
   - file_to_index: path for file or directory to validate
+  - id: string identifying the `sample_id` of the indexed VCF
 
 Parameters:
   - output_dir: directory to store index files.
