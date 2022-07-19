@@ -9,10 +9,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 ### Added
-- Intermediate file/directory removal module
-- Genome interval extraction module
-- PipeVal validation module
-- Standardized filename generation module
+- Add intermediate file/directory removal module
+- Add genome interval extraction module
+- Add pipeVal validation module
+- Add standardized filename generation module
 
 ### Changed
 - Initial pipeline set up.
