@@ -7,7 +7,7 @@ options = initOptions(params.options)
     Nextflow module for index VCF files, including: gff and vcf.
 
     input:
-        sequencing file: path to the VCF file
+        file_to_index: path to the VCF file
         id: string identifying the sample_id of the indexed VCF
     params:
         output_dir: string(path)
@@ -19,11 +19,11 @@ process index_VCF_tabix {
     container options.docker_image
     publishDir path: "${options.output_dir}/output",
                mode: "copy",
-               pattern: "*.tbi",
+               pattern: "*.{tbi,gz}",
                enabled: options.is_output_file
     publishDir path: "${options.output_dir}/intermediate/${task.process.replace(':', '/')}",
                mode: "copy",
-               pattern: "*.tbi",
+               pattern: "*.{tbi,gz}",
                enabled: !options.is_output_file && options.save_intermediate_files
     publishDir path: "${options.log_output_dir}",
                mode: "copy",
@@ -34,12 +34,14 @@ process index_VCF_tabix {
     tuple val(id), path(file_to_index)
 
     output:
+    tuple val(id), path("*.gz") , emit: vcf_gz
     tuple val(id), path("*.tbi"), emit: index
     path ".command.*"
 
     script:
     """
     set -euo pipefail
-    tabix ${options.extra_args} -p \$(basename $file_to_index .gz | tail -c 4) $file_to_index
+    bgzip -c ${file_to_index} > ${file_to_index}.gz
+    tabix ${options.extra_args} -p \$(basename $file_to_index | tail -c 4) ${file_to_index}.gz
     """
 }

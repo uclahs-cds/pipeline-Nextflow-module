@@ -1,5 +1,5 @@
 /*
- *  Utility functions for indexing VCFs.
+ *  Utility functions for compressing and indexing VCFs.
  */
 
 
