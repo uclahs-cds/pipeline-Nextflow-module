@@ -8,6 +8,7 @@
   - [Standardized Filename Generator](#standardized-filename-generator)
   - [PipeVal](#pipeval)
     - [Validate](#validate)
+  - [Index VCF file](#index-vcf-file)
 - [License](#License)
 
 
@@ -121,6 +122,29 @@ Parameters:
 4. Call the process with the inputs where needed
 5. Aggregate and save the output validation files as needed
 
+### Index VCF File
+##### Description
+Module for indexing VCF/GFF files, including uncompressed and compressed *.vcf and *.gff,  using `tabix`.
+
+Tools used: `tabix`.
+
+Inputs:
+  - file_to_index: path for file or directory to validate
+  - id: string identifying the `sample_id` of the indexed VCF
+
+Parameters:
+  - output_dir: directory to store index files.
+  - log_output_dir: directory to store log files.
+  - docker_image: SAMtools docker image version within which process will run. The default is: `1.15.1`
+  - process_label: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
+  - is_output_file: determine the output of this process should be saved to `output` or `intermediate` folder. For `intermediate` process, using `addParams` to specify `is_output_file: false`. The default is `true`.
+  - save_intermediate_files: whether the index files should be saved to the intermediate output directory.
+
+##### How to use
+1. Add this repository as a submodule in the pipeline of interest.
+2. Include the `index_VCF_tabix` process from the module `main.nf` with a relative path.
+3. Use the `addParams` directive when importing to specify any params.
+4. Call the process with the inputs where needed.
 
 ## License
 
