@@ -142,7 +142,7 @@ Parameters:
 
 ##### How to use
 1. Add this repository as a submodule in the pipeline of interest.
-2. Include the `index_VCF_tabix` process from the module `main.nf` with a relative path.
+2. Include the `compress_index_VCF` workflow from the module `workflow_compress_index.nf` with a relative path.
 3. Use the `addParams` directive when importing to specify any params.
 4. Call the process with the input channel, a tuple with `id` and `file_path`.
 
