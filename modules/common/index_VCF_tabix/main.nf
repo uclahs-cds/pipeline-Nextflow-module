@@ -7,7 +7,7 @@ options = initOptions(params.options)
     Nextflow module for index VCF files, including: gff and vcf.
 
     input:
-        file_to_index: path to the VCF file
+        file_to_compress/index: path to the VCF file
         id: string identifying the sample_id of the indexed VCF
     params:
         output_dir: string(path)
