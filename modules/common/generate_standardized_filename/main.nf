@@ -21,10 +21,10 @@ def sanitize_string(Object raw) {
     }
 
     // Keep only alphanumeric, -, _, ., and / characters
-    def disallowed_characters = /[^a-zA-Z\d\-\_\.\/]/
-    def cleaned_str = raw.replaceAll(disallowed_characters, '')
-    // Replace _ with -
-    cleaned_str = cleaned_str.replace('_', '-')
+    def disallowed_characters = /[^a-zA-Z\d\/_.-]/
+    def cleaned_str = raw
+        .replaceAll(disallowed_characters, '')
+        .replace('_', '-')
     return cleaned_str
 }
 
