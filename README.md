@@ -85,6 +85,11 @@ Inputs:
     - `additional_tools`: list of strings identifying any additional tools to include in filename
     - `additional_information`: string containing any additional information to be included at the end of the filename
 
+Additional functions:
+  - `sanitize_string` - Pass input string to sanitize, keeping only alphanumeric, `-`, `/`, and `.` characters and replacing `_` with `-`
+    - Inputs:
+      - `raw`: string to sanitize
+
 Outputs:
   - String representing the standardized filename
 
