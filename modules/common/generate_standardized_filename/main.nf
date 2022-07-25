@@ -3,14 +3,27 @@
 */
 
 /**
+*   Internal function to define common types for strings
+*   #output string_types    list    List containing string types
+*/
+def STRING_TYPES() {
+    return [String, GString]
+}
+
+/**
 *   Sanitize string
 *   @input  raw Object  Raw input object (String or GString) for cleaning
 *   @output cleaned_str string  Cleaned string
 */
 def sanitize_string(Object raw) {
-    def cleaned_str = ''
-    // Remove spaces and replace _ with -
-    cleaned_str = raw.replace(' ', '').replace('_', '-')
+    if (!STRING_TYPES().any{ raw in it }) {
+        invalid_string('Input to sanitize')
+    }
+
+    // Keep only alphanumeric, -, _, ., and / characters
+    def cleaned_str = raw.replaceAll(/[^a-zA-Z\d\-\_\.\/]/, '')
+    // Replace _ with -
+    cleaned_str = cleaned_str.replace('_', '-')
     return cleaned_str
 }
 
@@ -33,11 +46,10 @@ def invalid_string(String name) {
 *   @output filename    string  Formatted string for filename
 */
 def generate_standard_filename(Object main_tool, Object dataset_id, Object sample_id, Map additional_args) {
-    def STRING_TYPES = [String, GString]
     // Check type of basic inputs
     def basic_inputs = ['main_tool': main_tool, 'dataset_id': dataset_id, 'sample_id': sample_id]
     basic_inputs.each { key, val ->
-        if (STRING_TYPES.any{ val in it } && val?.trim()) {
+        if (STRING_TYPES().any{ val in it } && val?.trim()) {
             basic_inputs[key] = sanitize_string(val)
         } else {
             invalid_string(key)
@@ -50,7 +62,7 @@ def generate_standard_filename(Object main_tool, Object dataset_id, Object sampl
         additional_args['additional_tools'] &&
         additional_args['additional_tools'] in List) {
         additional_args['additional_tools'].each { tool ->
-            if (STRING_TYPES.any{ tool in it } && tool?.trim()) {
+            if (STRING_TYPES().any{ tool in it } && tool?.trim()) {
                 additional_tools.add(sanitize_string(tool))
             }
         }
@@ -60,7 +72,7 @@ def generate_standard_filename(Object main_tool, Object dataset_id, Object sampl
     def additional_information = ''
     if (additional_args.containsKey('additional_information') &&
         additional_args['additional_information'] &&
-        STRING_TYPES.any{ additional_args['additional_information'] in it }) {
+        STRING_TYPES().any{ additional_args['additional_information'] in it }) {
         if (additional_args['additional_information']?.trim()) {
             additional_information = sanitize_string(additional_args['additional_information'])
         }
