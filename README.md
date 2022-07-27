@@ -85,14 +85,19 @@ Inputs:
     - `additional_tools`: list of strings identifying any additional tools to include in filename
     - `additional_information`: string containing any additional information to be included at the end of the filename
 
+Additional functions:
+  - `sanitize_string` - Pass input string to sanitize, keeping only alphanumeric, `-`, `/`, and `.` characters and replacing `_` with `-`
+    - Inputs:
+      - `raw`: string to sanitize
+
 Outputs:
   - String representing the standardized filename
 
 #### Hot to use
 
 1. Add this repository as a submodule in the pipeline of interest
-2. Include the `generate_standard_filename` function from the module `main.nf` with a relative path in any Nextflow file requiring use of the function
-3. Call the function as needed with the approriate inputs and use returned value to set file names
+2. Include the `generate_standard_filename` and any additional necessary functions from the module `main.nf` with a relative path in any Nextflow file requiring use of the function
+3. Call the functions as needed with the approriate inputs and use returned value to set file names
 
 ### PipeVal
 
