@@ -36,6 +36,6 @@ process run_validate_PipeVal {
     script:
     """
     set -euo pipefail
-    python3 -m validate -t ${mode} ${file_to_validate} > 'validation.txt'
+    validate -t ${mode} ${file_to_validate} > 'validation.txt'
     """
 }
