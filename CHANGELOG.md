@@ -21,6 +21,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update log output directory for intermediate file removal
 - File deletion module: add disk usage monitoring before and after deletion
 - PipeVal module: nested log directories
-
-### Updated
 - Update PipeVal to v3.0.0.
