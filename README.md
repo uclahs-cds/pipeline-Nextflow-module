@@ -1,15 +1,26 @@
 # Nextflow Modules
 
 
-- [Overview](#overview)
-- [Available Modules](#available-modules)
-  - [Intermediate file removal](#intermediate-file-removal)
-  - [Genomic interval extraction](#genomic-interval-extraction)
-  - [Standardized Filename Generator](#standardized-filename-generator)
-  - [PipeVal](#pipeval)
-    - [Validate](#validate)
-  - [Index VCF file](#index-vcf-file)
-- [License](#License)
+- [Nextflow Modules](#nextflow-modules)
+  - [Overview](#overview)
+  - [Available Modules](#available-modules)
+    - [Intermediate file removal](#intermediate-file-removal)
+      - [Description](#description)
+      - [How to use](#how-to-use)
+    - [Genomic interval extraction](#genomic-interval-extraction)
+      - [Description](#description-1)
+      - [How to use](#how-to-use-1)
+    - [Standardized Filename Generator](#standardized-filename-generator)
+      - [Description](#description-2)
+      - [Hot to use](#hot-to-use)
+    - [PipeVal](#pipeval)
+      - [Validate](#validate)
+        - [Description](#description-3)
+        - [How to use](#how-to-use-2)
+    - [Index VCF File](#index-vcf-file)
+        - [Description](#description-4)
+        - [How to use](#how-to-use-3)
+  - [License](#license)
 
 
 ## Overview
@@ -34,7 +45,7 @@ Parameters:
   - `output_dir`: directory for storing outputs
   - `log_output_dir`: directory for storing log files
   - `save_intermediate_files`: boolean indicating whether this process should run (disable when intermediate files need to be kept)
-  - `docker_image`: docker image within which process will run. The default is: `blcdsdockerregistry/pipeval:2.1.6`
+  - `docker_image`: docker image within which process will run. The default is: `blcdsdockerregistry/pipeval:3.0.0`
   - `process_label`: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
 
 #### How to use
@@ -59,7 +70,7 @@ Parameters:
   - `output_dir`: directory for storing outputs
   - `log_output_dir`: directory for storing log files
   - `save_intermediate_files`: boolean indicating whether the extracted intervals should be copied to the output directory
-  - `docker_image`: docker image within which process will run. The default is: `blcdsdockerregistry/pipeval:2.1.6`
+  - `docker_image`: docker image within which process will run. The default is: `blcdsdockerregistry/pipeval:3.0.0`
   - `process_label`: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
 
 #### How to use
@@ -115,9 +126,9 @@ Inputs:
 
 Parameters:
   - `log_output_dir`: directory for storing log files
-  - `docker_image_version`: PipeVal docker image version within which process will run. The default is: `2.1.6`
+  - `docker_image_version`: PipeVal docker image version within which process will run. The default is: `3.0.0`
   - `process_label`: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
-  - `main_process`: Set output directory to the specified main process instead of `PipeVal-2.1.6 `
+  - `main_process`: Set output directory to the specified main process instead of `PipeVal-3.0.0 `
 
 ##### How to use
 
