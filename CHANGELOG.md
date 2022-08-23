@@ -13,7 +13,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add genome interval extraction module.
 - Add PipeVal validation module.
 - Add index file module.
-- Add standardized filename generation module.
+- Add standardized filename generation module
+- Add exposed string sanitization function
 - Add `bgzip` to `index_VCF_tabix` module.
 
 ### Changed
@@ -21,3 +22,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update log output directory for intermediate file removal
 - File deletion module: add disk usage monitoring before and after deletion
 - PipeVal module: nested log directories
+- Update PipeVal to v3.0.0.
