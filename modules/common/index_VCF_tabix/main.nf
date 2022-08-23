@@ -40,7 +40,7 @@ process compress_VCF_bgzip {
     script:
     """
     set -euo pipefail
-    bgzip -c ${file_to_compress} > ${file_to_compress}.gz
+    bgzip ${options.extra_args} ${file_to_compress} > ${file_to_compress}.gz
     """
 }
 
