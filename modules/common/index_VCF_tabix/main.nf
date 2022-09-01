@@ -40,7 +40,7 @@ process compress_VCF_bgzip {
     script:
     """
     set -euo pipefail
-    bgzip ${options.extra_args} ${file_to_compress} > ${file_to_compress}.gz
+    bgzip ${options.bgzip_extra_args} ${file_to_compress} > ${file_to_compress}.gz
     """
 }
 
@@ -70,6 +70,6 @@ process index_VCF_tabix {
     script:
     """
     set -euo pipefail
-    tabix ${options.extra_args} -p \$(basename $file_to_index .gz | tail -c 4) $file_to_index
+    tabix ${options.tabix_extra_args} -p \$(basename $file_to_index .gz | tail -c 4) $file_to_index
     """
 }
