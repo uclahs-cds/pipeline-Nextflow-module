@@ -15,6 +15,6 @@ def initOptions(Map args) {
     options.save_intermediate_files = args.containsKey('save_intermediate_files') ? args.save_intermediate_files : false
     options.is_output_file       = args.containsKey('is_output_file') ? args.is_output_file : true
     options.bgzip_extra_args              = args.containsKey('bgzip_extra_args') ? args.bgzip_extra_args : ''
-    options.tabix_extra_args              = args.containsKey('tabix_extra_args') ? args.bgzip_extra_args : ''
+    options.tabix_extra_args              = args.containsKey('tabix_extra_args') ? args.tabix_extra_args : ''
     return options
 }

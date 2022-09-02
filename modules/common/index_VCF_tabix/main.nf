@@ -49,11 +49,11 @@ process index_VCF_tabix {
     container options.docker_image
     publishDir path: "${options.output_dir}/output",
                mode: "copy",
-               pattern: "*.tbi",
+               pattern: "*.{tbi,csi}",
                enabled: options.is_output_file
     publishDir path: "${options.output_dir}/intermediate/${task.process.replace(':', '/')}",
                mode: "copy",
-               pattern: "*.tbi",
+               pattern: "*.{tbi,csi}",
                enabled: !options.is_output_file && options.save_intermediate_files
     publishDir path: "${options.log_output_dir}",
                mode: "copy",
@@ -64,7 +64,7 @@ process index_VCF_tabix {
     tuple val(id), path(file_to_index)
 
     output:
-    tuple val(id), path("*.tbi"), emit: index
+    tuple val(id), path("*.{tbi,csi}"), emit: index
     path ".command.*"
 
     script:
