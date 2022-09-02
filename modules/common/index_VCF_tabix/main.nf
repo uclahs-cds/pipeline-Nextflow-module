@@ -64,7 +64,7 @@ process index_VCF_tabix {
     tuple val(id), path(file_to_index)
 
     output:
-    tuple val(id), path("*.{tbi,csi}"), emit: index
+    tuple val(id), path(file_to_index), path("*.{tbi,csi}"), emit: index_out
     path ".command.*"
 
     script:

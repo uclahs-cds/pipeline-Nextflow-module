@@ -9,5 +9,10 @@ workflow compress_index_VCF {
 
     emit:
         vcf_gz = compress_VCF_bgzip.out.vcf_gz
-        index = index_VCF_tabix.out.index
+        index = index_VCF_tabix.out.index_out
+                    .map { it ->
+                            id: it[0],
+                            file: it[2]
+                        }
+        index_out = index_VCF_tabix.out.index_out
 }
