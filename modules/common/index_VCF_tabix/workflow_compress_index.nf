@@ -8,7 +8,5 @@ workflow compress_index_VCF {
         index_VCF_tabix(compress_VCF_bgzip.out.vcf_gz)
 
     emit:
-        vcf_gz = compress_VCF_bgzip.out.vcf_gz
-        index = index_VCF_tabix.out.index
         index_out = index_VCF_tabix.out.index_out
 }
