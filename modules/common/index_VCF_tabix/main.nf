@@ -1,4 +1,4 @@
-include { compress_VCF_bgzip; index_VCF_tabix } from './main.nf'
+include { compress_VCF_bgzip; index_VCF_tabix } from './modules.nf'
 workflow compress_index_VCF {
     take:
         compress_index_ch

@@ -17,7 +17,7 @@
       - [Validate](#validate)
         - [Description](#description-3)
         - [How to use](#how-to-use-2)
-    - [Index VCF File](#index-vcf-file)
+    - [Index VCF File](#compress-and-index-vcf-file)
         - [Description](#description-4)
         - [How to use](#how-to-use-3)
   - [License](#license)
@@ -138,7 +138,7 @@ Parameters:
 4. Call the process with the inputs where needed
 5. Aggregate and save the output validation files as needed
 
-### Index VCF File
+### Compress and Index VCF File
 ##### Description
 Module for compressing and indexing VCF/GFF files, the input should be uncompressed *.vcf or *.gff files.
 
@@ -158,7 +158,7 @@ Parameters:
 
 ##### How to use
 1. Add this repository as a submodule in the pipeline of interest.
-2. Include the `compress_index_VCF` workflow from the module `workflow_compress_index.nf` with a relative path.
+2. Include the `compress_index_VCF` workflow from the module `main.nf` with a relative path.
 3. Use the `addParams` directive when importing to specify any params.
 4. Call the process with the input channel, a tuple with `id` and `file_path`.
 
