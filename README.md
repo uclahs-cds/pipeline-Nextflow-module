@@ -17,7 +17,7 @@
       - [Validate](#validate)
         - [Description](#description-3)
         - [How to use](#how-to-use-2)
-    - [Index VCF File](#index-vcf-file)
+    - [Index VCF File](#compress-and-index-vcf-file)
         - [Description](#description-4)
         - [How to use](#how-to-use-3)
   - [License](#license)
@@ -138,18 +138,18 @@ Parameters:
 4. Call the process with the inputs where needed
 5. Aggregate and save the output validation files as needed
 
-### Index VCF File
+### Compress and Index VCF File
 ##### Description
-Module for indexing VCF/GFF files, including uncompressed and compressed *.vcf and *.gff,  using `tabix`.
+Module for compressing and indexing VCF/GFF files, the input should be uncompressed *.vcf or *.gff files.
 
 Tools used: `tabix`.
 
 Inputs:
-  - file_to_index: path for file or directory to validate
-  - id: string identifying the `sample_id` of the indexed VCF
+  - file_to_index: path for VCF file to compress and index.
+  - id: string identifying the `id` of the indexed VCF. For more than one VCFs, the `id` should be unique for each sample.
 
 Parameters:
-  - output_dir: directory to store index files.
+  - output_dir: directory to store compressed VCF and index files.
   - log_output_dir: directory to store log files.
   - docker_image: SAMtools docker image version within which process will run. The default is: `1.15.1`
   - process_label: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
@@ -158,9 +158,9 @@ Parameters:
 
 ##### How to use
 1. Add this repository as a submodule in the pipeline of interest.
-2. Include the `index_VCF_tabix` process from the module `main.nf` with a relative path.
+2. Include the `compress_index_VCF` workflow from the module `main.nf` with a relative path.
 3. Use the `addParams` directive when importing to specify any params.
-4. Call the process with the inputs where needed.
+4. Call the process with the input channel, a tuple with `id` and `file_path`.
 
 ## License
 

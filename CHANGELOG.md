@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add index file module.
 - Add standardized filename generation module
 - Add exposed string sanitization function
+- Add `bgzip` to `index_VCF_tabix` module.
 
 ### Changed
 - Initial pipeline set up.
