@@ -4,15 +4,16 @@ params.options = [:]
 options = initOptions(params.options)
 
 /*
-    Nextflow module for index VCF files, including: gff and vcf.
+    Nextflow module for compressing VCF files, including: gff and vcf.
 
     input:
-        file_to_compress/index: path to the VCF file
-        id: string identifying the sample_id of the indexed VCF
+        file_to_compress: path to the VCF file
+        id: string identifying the sample_id of the VCF
     params:
         output_dir: string(path)
         log_output_dir: string(path)
         save_intermediate_files: bool.
+        bgzip_extra_args: string(extra options for bgzip)
 */
 
 process compress_VCF_bgzip {
@@ -44,6 +45,18 @@ process compress_VCF_bgzip {
     """
 }
 
+/*
+    Nextflow module for index VCF files, including: gff and vcf.
+
+    input:
+        file_to_index: path to the VCF file
+        id: string identifying the sample_id of the indexed VCF
+    params:
+        output_dir: string(path)
+        log_output_dir: string(path)
+        save_intermediate_files: bool.
+        tabix_extra_args: string(extra options used to index VCF)
+*/
 
 process index_VCF_tabix {
     container options.docker_image
