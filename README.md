@@ -45,7 +45,7 @@ Parameters:
   - `output_dir`: directory for storing outputs
   - `log_output_dir`: directory for storing log files
   - `save_intermediate_files`: boolean indicating whether this process should run (disable when intermediate files need to be kept)
-  - `docker_image`: docker image within which process will run. The default is: `blcdsdockerregistry/pipeval:3.0.0`
+  - `docker_image`: docker image within which process will run. The default is: `ghcr.io/uclahs-cds/pipeval:3.0.0`
   - `process_label`: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
 
 #### How to use
@@ -70,7 +70,7 @@ Parameters:
   - `output_dir`: directory for storing outputs
   - `log_output_dir`: directory for storing log files
   - `save_intermediate_files`: boolean indicating whether the extracted intervals should be copied to the output directory
-  - `docker_image`: docker image within which process will run. The default is: `blcdsdockerregistry/pipeval:3.0.0`
+  - `docker_image`: docker image within which process will run. The default is: `ghcr.io/uclahs-cds/pipeval:3.0.0`
   - `process_label`: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
 
 #### How to use
