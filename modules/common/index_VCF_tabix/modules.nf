@@ -27,13 +27,13 @@ process check_compression_bgzip {
     tuple val(id), path(file_to_check), env(IS_COMPRESSED), emit: checked_files
     path ".command.*"
 
+    shell '/bin/bash', '-uo', 'pipefail'
+
     script:
     """
-    set -euo pipefail
-
     IS_COMPRESSED='true'
 
-    bgzip -t ${file_to_check} 2> /dev/null
+    bgzip -t ${file_to_check}
 
     if [ "\$?" -ne 0 ]
     then
