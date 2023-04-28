@@ -29,10 +29,7 @@ workflow compress_index_VCF {
             .set{ input_ch_compress }
 
         if (options.unzip_and_rezip) {
-            checked_files.compressed_files
-                .set{ input_ch_uncompress }
-
-            uncompress_file_gunzip(input_ch_uncompress)
+            uncompress_file_gunzip(checked_files.compressed_files)
 
             uncompress_file_gunzip.out.uncompressed_files
                 .mix(input_ch_compress)
