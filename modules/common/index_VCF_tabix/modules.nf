@@ -4,6 +4,78 @@ params.options = [:]
 options = initOptions(params.options)
 
 /*
+    Nextflow module for checking if file is bgzip compressed.
+
+    input:
+        file_to_check: path to the file
+        id: string identifying the sample_id of the file
+    params:
+        log_output_dir: string(path)
+*/
+
+process check_compression_bgzip {
+    container options.docker_image
+    publishDir path: "${options.log_output_dir}",
+               mode: "copy",
+               pattern: ".command.*",
+               saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
+
+    input:
+    tuple val(id), path(file_to_check)
+
+    output:
+    tuple val(id), path(file_to_check), env(IS_COMPRESSED), emit: checked_files
+    path ".command.*"
+
+    script:
+    """
+    set -euo pipefail
+
+    IS_COMPRESSED='true'
+
+    bgzip -t ${file_to_check}
+
+    if [ "\$?" -ne 0 ]
+    then
+        IS_COMPRESSED='false'
+    fi
+    """
+}
+
+/*
+    Nextflow module for uncompressing bgzip-ed file.
+
+    input:
+        file_to_uncompress: path to the file
+        id: string identifying the sample_id of the file
+    params:
+        log_output_dir: string(path)
+*/
+
+process uncompress_file_gunzip {
+    container options.docker_image
+    publishDir path: "${options.log_output_dir}",
+               mode: "copy",
+               pattern: ".command.*",
+               saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
+
+    input:
+    tuple val(id), path(file_to_uncompress)
+
+    output:
+    tuple val(id), path(uncompressed_file), emit: uncompressed_files
+    path ".command.*"
+
+    script:
+    filename = file(file_to_uncompress).getName()
+    uncompressed_file = filename.lastIndexOf('.').with{ it != -1 ? filename[0..<it] : filename }
+    """
+    set -euo pipefail
+    gunzip -c ${file_to_uncompress} > ${uncompressed_file}
+    """
+}
+
+/*
     Nextflow module for compressing VCF files, including: gff and vcf.
 
     input:

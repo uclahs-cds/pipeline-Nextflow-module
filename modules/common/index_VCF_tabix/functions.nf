@@ -13,8 +13,9 @@ def initOptions(Map args) {
     options.docker_image            = args.docker_image ?: 'ghcr.io/uclahs-cds/samtools:1.15.1'
     options.process_label           = args.containsKey('process_label') ? args.process_label : 'none'
     options.save_intermediate_files = args.containsKey('save_intermediate_files') ? args.save_intermediate_files : false
-    options.is_output_file       = args.containsKey('is_output_file') ? args.is_output_file : true
-    options.bgzip_extra_args              = args.containsKey('bgzip_extra_args') ? args.bgzip_extra_args : ''
-    options.tabix_extra_args              = args.containsKey('tabix_extra_args') ? args.tabix_extra_args : ''
+    options.is_output_file          = args.containsKey('is_output_file') ? args.is_output_file : true
+    options.bgzip_extra_args        = args.containsKey('bgzip_extra_args') ? args.bgzip_extra_args : ''
+    options.tabix_extra_args        = args.containsKey('tabix_extra_args') ? args.tabix_extra_args : ''
+    options.unzip_and_rezip         = args.containsKey('unzip_and_rezip') ? args.unzip_and_rezip : false
     return options
 }
