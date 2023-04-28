@@ -33,7 +33,7 @@ process check_compression_bgzip {
 
     IS_COMPRESSED='true'
 
-    bgzip -t ${file_to_check}
+    bgzip -t ${file_to_check} 2> /dev/null
 
     if [ "\$?" -ne 0 ]
     then
