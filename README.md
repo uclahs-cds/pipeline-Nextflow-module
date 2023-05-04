@@ -121,14 +121,13 @@ Module for validating files and directories using PipeVal
 Tools used: `PipeVal`.
 
 Inputs:
-  - `mode`: string identifying type of validation
   - `file_to_validate`: path for file or directory to validate
 
 Parameters:
   - `log_output_dir`: directory for storing log files
-  - `docker_image_version`: PipeVal docker image version within which process will run. The default is: `3.0.0`
+  - `docker_image_version`: PipeVal docker image version within which process will run. The default is: `4.0.0-rc.2`
   - `process_label`: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
-  - `main_process`: Set output directory to the specified main process instead of `PipeVal-3.0.0 `
+  - `main_process`: Set output directory to the specified main process instead of `PipeVal-4.0.0-rc.2`
 
 ##### How to use
 
