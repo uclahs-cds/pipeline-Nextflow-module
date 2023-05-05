@@ -13,5 +13,6 @@ def initOptions(Map args) {
     options.docker_image            = "ghcr.io/uclahs-cds/pipeval:${options.docker_image_version}"
     options.process_label           = args.containsKey('process_label') ? args.process_label : 'none'
     options.main_process            = args.main_process ? args.main_process : ''
+    options.validate_extra_args     = args.validate_extra_args ?: ''
     return options
 }
