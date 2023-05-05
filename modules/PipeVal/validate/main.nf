@@ -35,6 +35,6 @@ process run_validate_PipeVal {
     script:
     """
     set -euo pipefail
-    validate ${file_to_validate} > 'validation.txt'
+    validate ${file_to_validate} ${options.validate_extra_args} > 'validation.txt'
     """
 }
