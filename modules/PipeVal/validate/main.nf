@@ -6,7 +6,6 @@ options = initOptions(params.options)
 /**
 *   Nextflow module for validating files and directories
 *
-*   @input  mode    string  Type of validation
 *   @input  file_to_validate    path    File or directory to validate
 *
 *   @params log_output_dir  path    Directory for saving log files
@@ -26,7 +25,7 @@ process run_validate_PipeVal {
         saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
     input:
-        tuple val(mode), path(file_to_validate)
+        path(file_to_validate)
 
     output:
         path(".command.*")
@@ -36,6 +35,6 @@ process run_validate_PipeVal {
     script:
     """
     set -euo pipefail
-    validate -t ${mode} ${file_to_validate} > 'validation.txt'
+    validate ${file_to_validate} ${options.validate_extra_args} > 'validation.txt'
     """
 }
