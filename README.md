@@ -140,13 +140,13 @@ Parameters:
 
 ### Compress and Index VCF File
 ##### Description
-Module for compressing and indexing VCF/GFF files, the input should be uncompressed *.vcf or *.gff files.
+Module for compressing and indexing VCF/GFF files, the input should be compressed or uncompressed *.vcf or *.gff files.
 
-Tools used: `tabix`.
+Tools used: `tabix`, `bgzip`.
 
 Inputs:
-  - file_to_index: path for VCF file to compress and index.
   - id: string identifying the `id` of the indexed VCF. For more than one VCFs, the `id` should be unique for each sample.
+  - file_to_index: path for VCF file to compress and index.
 
 Parameters:
   - output_dir: directory to store compressed VCF and index files.
