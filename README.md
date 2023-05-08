@@ -139,13 +139,13 @@ Parameters:
 
 ### Compress and Index VCF File
 ##### Description
-Module for compressing and indexing VCF/GFF files, the input should be uncompressed *.vcf or *.gff files.
+Module for compressing and indexing VCF/GFF files, the input should be compressed or uncompressed *.vcf or *.gff files.
 
-Tools used: `tabix`.
+Tools used: `tabix`, `bgzip`.
 
 Inputs:
-  - file_to_index: path for VCF file to compress and index.
   - id: string identifying the `id` of the indexed VCF. For more than one VCFs, the `id` should be unique for each sample.
+  - file_to_index: path for VCF file to compress and index.
 
 Parameters:
   - output_dir: directory to store compressed VCF and index files.
@@ -154,6 +154,7 @@ Parameters:
   - process_label: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
   - is_output_file: determine the output of this process should be saved to `output` or `intermediate` folder. For `intermediate` process, using `addParams` to specify `is_output_file: false`. The default is `true`.
   - save_intermediate_files: whether the index files should be saved to the intermediate output directory.
+  - unzip_and_rezip: whether compressed files should be uncompressed and re-compressed using `bgzip`. The default is `false`.
 
 ##### How to use
 1. Add this repository as a submodule in the pipeline of interest.
