@@ -104,7 +104,7 @@ Additional functions:
 Outputs:
   - String representing the standardized filename
 
-#### Hot to use
+#### How to use
 
 1. Add this repository as a submodule in the pipeline of interest
 2. Include the `generate_standard_filename` and any additional necessary functions from the module `main.nf` with a relative path in any Nextflow file requiring use of the function
@@ -136,6 +136,33 @@ Parameters:
 3. Use the `addParams` directive when importing to specify any params
 4. Call the process with the inputs where needed
 5. Aggregate and save the output validation files as needed
+
+#### generate-checksum
+
+##### Description
+
+Module for generating checksums for files using PipeVal
+
+Tools used: `PipeVal`.
+
+Inputs:
+  - `input_file`: path for file to generate a checksum
+
+Parameters:
+  - `log_output_dir`: directory for storing log files
+  - `docker_image_version`: PipeVal docker image version within which process will run. The default is: `4.0.0-rc.2`
+  - `process_label`: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
+  - `main_process`: Set output directory to the specified main process instead of `PipeVal-4.0.0-rc.2`
+  - `checksum_alg`: choose from `sha512` or `md5`
+
+##### How to use
+
+1. Add this repository as a submodule in the pipeline of interest
+2. Include the `generate_checksum_PipeVal` process from the module `main.nf` with a relative path
+3. Use the `addParams` directive when importing to specify any params
+4. Call the process with the inputs where needed
+5. Aggregate and save the output checksum files as needed
+
 
 ### Compress and Index VCF File
 ##### Description

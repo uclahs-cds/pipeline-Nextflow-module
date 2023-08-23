@@ -17,6 +17,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add exposed string sanitization function
 - Add options to handle compressed files with VCF indexing workflow
 - Add `bgzip` to `index_VCF_tabix` module
+- Add PipeVal generate-checksum module
 
 ### Changed
 - Use `ghcr.io/uclahs-cds` as default registry
