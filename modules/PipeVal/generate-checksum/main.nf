@@ -36,7 +36,7 @@ process generate_checksum_PipeVal {
 
     input:
         path(input_file)
-        val(aligner_output_dir)
+        path(aligner_output_dir)
 
     output:
         path(".command.*")
