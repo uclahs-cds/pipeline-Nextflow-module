@@ -26,13 +26,13 @@ process generate_checksum_PipeVal {
         mode: "copy",
         saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
-    publishDir path: aligner_output_dir  
+    publishDir path: aligner_output_dir,
         pattern: "*.sha512",
-        mode: "copy" }
+        mode: "copy" 
 
-    publishDir path: aligner_output_dir  
+    publishDir path: aligner_output_dir,
         pattern: "*.md5",
-        mode: "copy" }
+        mode: "copy" 
 
     input:
         path(input_file)
