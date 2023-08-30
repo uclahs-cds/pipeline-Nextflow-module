@@ -7,8 +7,8 @@ options = initOptions(params.options)
 *   Nextflow module for generating checksums
 *
 *   @input  file_to_validate    path    File to generate checksum
-*   @input  aligner_output_dir  path    Directory for saving checksums 
 *
+*   @params aligner_output_dir  path    Directory for saving checksums 
 *   @params log_output_dir  path    Directory for saving log files
 *   @params docker_image_version    string  Version of PipeVal image for validation
 *   @params checksum_alg    string  (Optional) Select between 'sha512'(default) or 'md5' 
@@ -27,19 +27,15 @@ process generate_checksum_PipeVal {
         saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
     publishDir path: "${aligner_output_dir}",
-        pattern: "*.sha512",
-        mode: "copy" 
-
-    publishDir path: "${aligner_output_dir}",
-        pattern: "*.md5",
+        pattern: "*.${checksum_alg}",
         mode: "copy" 
 
     input:
         path(input_file)
-        val(aligner_output_dir)
 
     output:
         path(".command.*")
+	path("*.${checksum_alg}")
 
     script:
     """
