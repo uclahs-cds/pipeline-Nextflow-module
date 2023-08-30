@@ -26,8 +26,8 @@ process generate_checksum_PipeVal {
         mode: "copy",
         saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
-    publishDir path: "${aligner_output_dir}",
-        pattern: "*.${checksum_alg}",
+    publishDir path: "${options.aligner_output_dir}",
+        pattern: "*.${options.checksum_alg}",
         mode: "copy" 
 
     input:
@@ -35,7 +35,7 @@ process generate_checksum_PipeVal {
 
     output:
         path(".command.*")
-	path("*.${checksum_alg}")
+	path("*.${options.checksum_alg}")
 
     script:
     """
