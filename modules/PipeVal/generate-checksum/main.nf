@@ -8,7 +8,7 @@ options = initOptions(params.options)
 *
 *   @input  file_to_validate    path    File to generate checksum
 *
-*   @params checksum_output_dir  path    Directory for saving checksums 
+*   @params output_dir  path    Directory for saving checksums 
 *   @params log_output_dir  path    Directory for saving log files
 *   @params docker_image_version    string  Version of PipeVal image for validation
 *   @params checksum_alg    string  (Optional) Select between 'sha512'(default) or 'md5' 
@@ -26,7 +26,7 @@ process generate_checksum_PipeVal {
         mode: "copy",
         saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
-    publishDir path: "${options.checksum_output_dir}",
+    publishDir path: "${options.output_dir}",
         pattern: "*.${options.checksum_alg}",
         mode: "copy" 
 
