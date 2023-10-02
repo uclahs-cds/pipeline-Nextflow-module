@@ -163,6 +163,18 @@ Parameters:
 3. Use the `addParams` directive when importing to specify any params
 4. Call the process with the inputs where needed
 
+#### store_params_json
+
+##### Description
+
+Module that extracts all parameters into a JSON file, stored in the folder "param-log" under the default log directory. 
+
+##### How to use
+
+1. Add this repository as a submodule in the pipeline of interest
+2. Include the `store_params_json` process from the module `main.nf` with a relative path
+3. Call the process
+
 ### Compress and Index VCF File
 ##### Description
 Module for compressing and indexing VCF/GFF files, the input should be compressed or uncompressed *.vcf or *.gff files.
