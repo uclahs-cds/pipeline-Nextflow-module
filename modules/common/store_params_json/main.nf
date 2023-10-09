@@ -1,16 +1,15 @@
+
 /* groovylint-disable CompileStatic */
 import groovy.json.JsonOutput
 
-process store_params_json {
-    publishDir path: "${params.log_output_dir}/param-log",
-    mode: 'copy',
-    pattern: '*.json'
+include { initOptions } from './functions.nf'
 
-    output:
-    path 'pipeline_params.json'
-
-    exec:
+void store_params_json() {
+    Map ps = [:]
+    def options = initOptions(ps)
     json_params = JsonOutput.prettyPrint(JsonOutput.toJson(params))
-    writer = file("${task.workDir}/pipeline_params.json")
-    writer.write(json_params)
+    File file = new File("${options.log_output_dir}/nextflow-log/params.json")
+    File logdir = new File("${options.log_output_dir}/nextflow-log")
+    logdir.mkdirs()
+    file.write(json_params)
 }
