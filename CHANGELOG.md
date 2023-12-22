@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 ### Added
+- Add `indexFile` module to return index file path
 - Add intermediate file/directory removal module
 - Add genome interval extraction module
 - Add PipeVal validation module

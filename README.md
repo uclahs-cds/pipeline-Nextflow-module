@@ -188,6 +188,17 @@ Parameters:
 3. Use the `addParams` directive when importing to specify any params.
 4. Call the process with the input channel, a tuple with `id` and `file_path`.
 
+### Return Expected Index File
+##### Description
+Module returns the expected path to the index file for a given input file.
+NOTE! This does not check for the existence of the index file.
+
+Inputs:
+ - input_file: currently supports BAM or VCF
+
+Output:
+ - The input file path with the expected index extension appended: currently `.bai` for BAM files and `.tbi` for VCF files
+
 ## License
 
 Author: Yash Patel (YashPatel@mednet.ucla.edu)
