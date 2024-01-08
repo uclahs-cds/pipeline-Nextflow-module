@@ -199,6 +199,11 @@ Inputs:
 Output:
  - The input file path with the expected index extension appended: currently `.bai` for BAM files and `.tbi` for VCF files
 
+##### How to use
+1. Add this repository as a submodule in the pipeline of interest.
+2. Include the `indexFile` process from the module `main.nf` with a relative path.
+3. Call the function as needed with the approriate input and use returned value as index file name
+
 ## License
 
 Author: Yash Patel (YashPatel@mednet.ucla.edu)
