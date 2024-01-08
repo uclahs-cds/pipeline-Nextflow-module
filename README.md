@@ -201,7 +201,7 @@ Output:
 
 ##### How to use
 1. Add this repository as a submodule in the pipeline of interest.
-2. Include the `indexFile` process from the module `main.nf` with a relative path.
+2. Include the `indexFile` function from the module `main.nf` with a relative path.
 3. Call the function as needed with the approriate input and use returned value as index file name
 
 ## License
