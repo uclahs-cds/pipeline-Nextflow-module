@@ -25,7 +25,7 @@ process remove_intermediate_files {
       saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
     input:
-    path(file_to_remove)
+    path(input_file_to_remove), stageAs: "delete.file"
     val(ready_for_deletion_signal)
 
     output:
@@ -35,6 +35,7 @@ process remove_intermediate_files {
     !options.save_intermediate_files
 
     script:
+    file_to_remove = "delete.file"
     """
     set -euo pipefail
 
