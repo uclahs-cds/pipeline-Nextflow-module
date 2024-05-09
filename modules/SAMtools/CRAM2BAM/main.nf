@@ -37,6 +37,7 @@ process convert_cram2bam_SAMtools {
             --threads ${task.cpus} \
             -T ${reference_genome} \
             -o "uncrammed_${sample.baseName}.bam" \
+            ${options.extra_args} \
             ${sample}
     """
 }

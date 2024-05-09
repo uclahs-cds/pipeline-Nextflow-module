@@ -12,6 +12,7 @@ def initOptions(Map args) {
     options.intermediate_output_dir = args.intermediate_output_dir ?: params.intermediate_output_dir
     options.save_intermediate_files = args.containsKey('save_intermediate_files') ? args.save_intermediate_files : true
     options.process_log_output_dir = args.process_log_output_dir ?: params.process_log_output_dir
+    options.extra_args = args.extra_args ?: ''
     return options
 }
 
