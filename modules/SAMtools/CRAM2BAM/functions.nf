@@ -15,4 +15,3 @@ def initOptions(Map args) {
     options.extra_args = args.extra_args ?: ''
     return options
 }
-
