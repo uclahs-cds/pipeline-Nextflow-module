@@ -12,14 +12,24 @@
       - [How to use](#how-to-use-1)
     - [Standardized Filename Generator](#standardized-filename-generator)
       - [Description](#description-2)
-      - [Hot to use](#hot-to-use)
+      - [How to use](#how-to-use-2)
     - [PipeVal](#pipeval)
       - [Validate](#validate)
         - [Description](#description-3)
-        - [How to use](#how-to-use-2)
-    - [Index VCF File](#compress-and-index-vcf-file)
-        - [Description](#description-4)
         - [How to use](#how-to-use-3)
+      - [generate-checksum](#generate-checksum)
+        - [Description](#description-4)
+        - [How to use](#how-to-use-4)
+    - [Compress and Index VCF File](#compress-and-index-vcf-file)
+        - [Description](#description-5)
+        - [How to use](#how-to-use-5)
+    - [Return Expected Index File](#return-expected-index-file)
+        - [Description](#description-6)
+        - [How to use](#how-to-use-6)
+    - [SAMtools](#samtools)
+      - [CRAM2BAM](#cram2bam)
+        - [Description](#description-7)
+        - [How to use](#how-to-use-7)
   - [License](#license)
 
 
@@ -203,6 +213,37 @@ Output:
 1. Add this repository as a submodule in the pipeline of interest.
 2. Include the `indexFile` function from the module `main.nf` with a relative path.
 3. Call the function as needed with the approriate input and use returned value as index file name
+
+### SAMtools
+
+#### CRAM2BAM
+
+##### Description
+
+Module for converting from CRAM to BAM format.
+
+Tools used: `samtools view`.
+
+Inputs:
+  - `tuple(sample_name, path/to/sample/CRAM)`: name and path to CRAM sample
+  - `path/to/reference/genome`: path to the reference genome
+
+Outputs:
+  - `tuple(sample_name, path/to/sample/CRAM)`: name and path to converted BAM sample
+
+Parameters:
+  - `docker_image_samtools`: docker image for running SAMtools. default: `"ghcr.io/uclahs-cds/samtools:1.20"`
+  - `intermediate_output_dir`: directory for intermediate outputs.
+  - `save_intermediate_files`: when true will save intermediate files.
+  - `process_log_output_dir`: directory for storing process log.
+  - `extra_args`: optional extra arguments for `samtools view` command.
+
+##### How to use
+
+1. Add this repository as a submodule in the pipeline of interest
+2. Include the `convert_cram2bam_SAMtools` process from the module `main.nf` with a relative path
+3. Use the `addParams` directive when importing to specify any params
+4. Call the process with the inputs where needed
 
 ## License
 
