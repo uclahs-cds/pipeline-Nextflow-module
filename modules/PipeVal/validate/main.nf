@@ -24,6 +24,9 @@ process run_validate_PipeVal {
         mode: "copy",
         saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
+    // This process uses the publishDir method to save the log files
+    ext capture_logs: false
+
     input:
         path(file_to_validate)
 
