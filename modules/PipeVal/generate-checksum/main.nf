@@ -30,6 +30,9 @@ process generate_checksum_PipeVal {
         pattern: "*.${options.checksum_alg}",
         mode: "copy" 
 
+    // This process uses the publishDir method to save the log files
+    ext capture_logs: false
+
     input:
         path(input_file)
 
