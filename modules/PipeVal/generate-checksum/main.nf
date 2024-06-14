@@ -38,11 +38,17 @@ process generate_checksum_PipeVal {
 
     output:
         path(".command.*")
-	path("*.${options.checksum_alg}")
+        path("*.${options.checksum_alg}")
 
     script:
     """
     set -euo pipefail
-    pipeval generate-checksum -t ${options.checksum_alg} ${input_file} ${options.checksum_extra_args}
+
+    if command -v pipeval &> /dev/null
+    then
+        pipeval generate-checksum -t ${options.checksum_alg} ${input_file} ${options.checksum_extra_args}
+    else
+        generate-checksum -t ${options.checksum_alg} ${input_file} ${options.checksum_extra_args}
+    fi
     """
 }
