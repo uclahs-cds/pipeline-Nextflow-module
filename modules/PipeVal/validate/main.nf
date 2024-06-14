@@ -87,6 +87,12 @@ process run_validate_PipeVal_with_metadata {
     script:
     """
     set -euo pipefail
-    validate ${file_to_validate} ${options.validate_extra_args} > 'validation.txt'
+
+    if command -v pipeval &> /dev/null
+    then
+        pipeval validate ${file_to_validate} ${options.validate_extra_args} > 'validation.txt'
+    else
+        validate ${file_to_validate} ${options.validate_extra_args} > 'validation.txt'
+    fi
     """
 }
