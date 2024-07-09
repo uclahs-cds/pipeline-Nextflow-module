@@ -4,16 +4,16 @@
 */
 
 def indexFile(Object given_file) {
-    if(bam_cram_or_vcf.endsWith('.bam')) {
-        return "${bam_cram_or_vcf}.bai"
+    if(given_file.endsWith('.bam')) {
+        return "${given_file}.bai"
         }
-    else if(bam_cram_or_vcf.endsWith('.cram')){
-        return "${bam_cram_or_vcf}.crai"
+    else if(given_file.endsWith('.cram')){
+        return "${given_file}.crai"
     }
-    else if(bam_cram_or_vcf.endsWith('vcf.gz')) {
-        return "${bam_cram_or_vcf}.tbi"
+    else if(given_file.endsWith('vcf.gz')) {
+        return "${given_file}.tbi"
         }
     else {
-        throw new Exception("Index file for ${bam_cram_or_vcf} file type not supported. Use .bam, .vcf.gz, or .cram files.")
+        throw new Exception("Index file for ${given_file} file type not supported. Use .bam, .vcf.gz, or .cram files.")
         }
     }
