@@ -25,7 +25,7 @@ process convert_cram2bam_SAMtools {
 
 
     output:
-        tuple val(sample_name), path("uncrammed_${sample.baseName}.bam"), emit: bam
+        tuple val(sample_name), path("uncrammed_${sample_cram.baseName}.bam"), emit: bam
         file ".command.*"
 
 
@@ -36,8 +36,8 @@ process convert_cram2bam_SAMtools {
             -b \
             --threads ${task.cpus} \
             -T ${reference_genome} \
-            -o "uncrammed_${sample.baseName}.bam" \
+            -o "uncrammed_${sample_cram.baseName}.bam" \
             ${options.extra_args} \
-            ${sample}
+            ${sample_cram}
     """
 }
