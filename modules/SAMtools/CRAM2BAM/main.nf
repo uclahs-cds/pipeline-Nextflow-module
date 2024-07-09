@@ -20,7 +20,7 @@ process convert_cram2bam_SAMtools {
         saveAs: { "log${file(it).getName()}" }
 
     input:
-        tuple( val(sample_name), path(sample) )
+        tuple( val(sample_name), path(sample_cram) )
         path( reference_genome )
 
 
