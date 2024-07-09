@@ -30,3 +30,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update PipeVal to v4.0.0-rc.2
 - Set `ext.capture_logs` to false for all processes to disable new `setup_process_afterscript()` behavior.
 - Change PipeVal command since the interface was changed.
+- Change indexFile to support cram format type
