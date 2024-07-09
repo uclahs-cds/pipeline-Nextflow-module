@@ -229,7 +229,7 @@ Inputs:
   - `path/to/reference/genome`: path to the reference genome
 
 Outputs:
-  - `tuple(sample_name, path/to/sample/CRAM)`: name and path to converted BAM sample
+  - `tuple(sample_name, path/to/sample/BAM)`: name and path to converted BAM sample
 
 Parameters:
   - `docker_image_samtools`: docker image for running SAMtools. default: `"ghcr.io/uclahs-cds/samtools:1.20"`
