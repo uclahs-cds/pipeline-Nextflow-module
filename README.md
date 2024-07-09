@@ -222,7 +222,7 @@ Output:
 
 Module for converting from CRAM to BAM format.
 
-Tools used: `samtools view`.
+Tools used: `SAMtools`.
 
 Inputs:
   - `tuple(sample_name, path/to/sample/CRAM)`: name and path to CRAM sample
