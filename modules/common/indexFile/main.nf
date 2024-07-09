@@ -14,6 +14,6 @@ def indexFile(Object given_file) {
         return "${bam_cram_or_vcf}.tbi"
         }
     else {
-        throw new Exception("Index file for ${bam_cram_or_vcf} file type not supported. Use .bam or .vcf.gz files.")
+        throw new Exception("Index file for ${bam_cram_or_vcf} file type not supported. Use .bam, .vcf.gz, or .cram files.")
         }
     }
