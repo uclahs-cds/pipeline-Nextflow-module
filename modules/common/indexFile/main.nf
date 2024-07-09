@@ -3,7 +3,7 @@
 *   Note that this is not a check for the existence of the index file.
 */
 
-def indexFile(Object bam_cram_or_vcf) {
+def indexFile(Object given_file) {
     if(bam_cram_or_vcf.endsWith('.bam')) {
         return "${bam_cram_or_vcf}.bai"
         }
