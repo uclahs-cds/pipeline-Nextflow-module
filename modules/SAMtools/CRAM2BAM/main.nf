@@ -9,12 +9,12 @@ options = initOptions(params.options)
 process convert_cram2bam_SAMtools {
     container options.docker_image_samtools
 
-    publishDir path: "${options.intermediate_output_dir}/${task.process.split(':')[-1].replace('_', '-')}",
+    publishDir path: "${options.intermediate_output_dir}/${task.process.split(':')[-1].replace('_', '-')}/${sample_name}",
         enabled: options.save_intermediate_files,
         pattern: "*.bam",
         mode: 'copy'
 
-    publishDir path: "${options.process_log_output_dir}/${task.process.split(':')[-1].replace('_', '-')}",
+    publishDir path: "${options.process_log_output_dir}/${task.process.split(':')[-1].replace('_', '-')}/${sample_name}",
         pattern: ".command.*",
         mode: "copy",
         saveAs: { "log${file(it).getName()}" }
