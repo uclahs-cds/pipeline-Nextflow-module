@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add options to handle compressed files with VCF indexing workflow
 - Add `bgzip` to `index_VCF_tabix` module
 - Add PipeVal generate-checksum module
+- Add SAMtools convert CRAM to BAM
 - Add `run_validate_PipeVal_with_metadata` method
 
 ### Changed
