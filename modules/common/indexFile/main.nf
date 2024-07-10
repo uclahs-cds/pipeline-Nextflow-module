@@ -3,14 +3,17 @@
 *   Note that this is not a check for the existence of the index file.
 */
 
-def indexFile(Object bam_or_vcf) {
-    if(bam_or_vcf.endsWith('.bam')) {
-        return "${bam_or_vcf}.bai"
+def indexFile(Object given_file) {
+    if(given_file.endsWith('.bam')) {
+        return "${given_file}.bai"
         }
-    else if(bam_or_vcf.endsWith('vcf.gz')) {
-        return "${bam_or_vcf}.tbi"
+    else if(given_file.endsWith('.cram')){
+        return "${given_file}.crai"
+    }
+    else if(given_file.endsWith('vcf.gz')) {
+        return "${given_file}.tbi"
         }
     else {
-        throw new Exception("Index file for ${bam_or_vcf} file type not supported. Use .bam or .vcf.gz files.")
+        throw new Exception("Index file for ${given_file} file type not supported. Use .bam, .vcf.gz, or .cram files.")
         }
     }

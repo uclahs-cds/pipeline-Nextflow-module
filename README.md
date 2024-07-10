@@ -126,12 +126,20 @@ Outputs:
 
 ##### Description
 
-Module for validating files and directories using PipeVal
+Module for validating files and directories using PipeVal. There are two nearly-identical methods in this module: `run_validate_PipeVal` and `run_validate_PipeVal_with_metadata`.
 
 Tools used: `PipeVal`.
 
 Inputs:
   - `file_to_validate`: path for file or directory to validate
+
+Inputs:
+  - `run_validate_PipeVal`:
+    - `file_to_validate`: path for file to generate a checksum
+  - `run_validate_PipeVal_with_metadata` Inputs:
+    - A tuple of:
+      - `file_to_validate`: path for file to generate a checksum
+      - `metadata`: arbitrary `val` passed through to the output
 
 Parameters:
   - `log_output_dir`: directory for storing log files
@@ -139,10 +147,14 @@ Parameters:
   - `process_label`: assign Nextflow process label to process to control resource allocation. For specific CPU and memory allocation, include static allocations in node-specific config files
   - `main_process`: Set output directory to the specified main process instead of `PipeVal-4.0.0-rc.2`
 
+Outputs:
+  - `validation_result`: path of file with validation output text
+  - `validated_file`: `file_to_validate` or tuple of (`file_to_validate`, `metadata`)
+
 ##### How to use
 
 1. Add this repository as a submodule in the pipeline of interest
-2. Include the `run_validate_PipeVal` process from the module `main.nf` with a relative path
+2. Include the `run_validate_PipeVal` or `run_validate_PipeVal_with_metadata` process from the module `main.nf` with a relative path
 3. Use the `addParams` directive when importing to specify any params
 4. Call the process with the inputs where needed
 5. Aggregate and save the output validation files as needed
