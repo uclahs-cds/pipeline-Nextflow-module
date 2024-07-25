@@ -5,15 +5,23 @@
 
 def indexFile(Object given_file) {
     if(given_file.endsWith('.bam')) {
-        return "${given_file}.bai"
+        index_file_name = "${given_file}.bai"
         }
     else if(given_file.endsWith('.cram')){
-        return "${given_file}.crai"
-    }
+        index_file_name = "${given_file}.crai"
+        }
     else if(given_file.endsWith('vcf.gz')) {
-        return "${given_file}.tbi"
+        index_file_name "${given_file}.tbi"
         }
     else {
         throw new Exception("Index file for ${given_file} file type not supported. Use .bam, .vcf.gz, or .cram files.")
         }
+
+    def index_file = new File(index_file_name)
+    if(index_file.exists()) {
+        return index_file_name
+        }
+    else {
+        throw new Exception("Index file not found. ${index_file_name} does not exist.")
+    }
     }
