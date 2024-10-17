@@ -20,6 +20,9 @@ process check_compression_bgzip {
                pattern: ".command.*",
                saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
 
+    // This process uses the publishDir method to save the log files
+    ext capture_logs: false
+
     input:
     tuple val(id), path(file_to_check)
 
@@ -58,6 +61,9 @@ process uncompress_file_gunzip {
                mode: "copy",
                pattern: ".command.*",
                saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
+
+    // This process uses the publishDir method to save the log files
+    ext capture_logs: false
 
     input:
     tuple val(id), path(file_to_uncompress)
@@ -103,6 +109,9 @@ process compress_VCF_bgzip {
                pattern: ".command.*",
                saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
 
+    // This process uses the publishDir method to save the log files
+    ext capture_logs: false
+
     input:
     tuple val(id), path(file_to_compress)
 
@@ -144,6 +153,9 @@ process index_VCF_tabix {
                mode: "copy",
                pattern: ".command.*",
                saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
+    
+    // This process uses the publishDir method to save the log files
+    ext capture_logs: false
 
     input:
     tuple val(id), path(file_to_index)
