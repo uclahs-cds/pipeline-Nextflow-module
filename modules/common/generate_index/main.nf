@@ -17,8 +17,8 @@ options = initOptions(params.options)
 */
 
 process run_index_SAMtools {
-    container options.docker_image_version
-    publishDir path: { options.main_process ?
+    container options.docker_image
+        publishDir path: { options.main_process ?
         "${options.log_output_dir}/process-log/${options.main_process}" :
         "${options.log_output_dir}/process-log/SAMtools-${options.docker_image_version}"
         },
@@ -26,7 +26,7 @@ process run_index_SAMtools {
         mode: "copy",
         saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
-    publishDir path: "${options.output_dir}/output",
+    publishDir path: "${options.output_dir}",
         mode: "copy",
         pattern: "${alignment_file}.*"
 
@@ -36,7 +36,7 @@ process run_index_SAMtools {
     path(alignment_file)
 
     output:
-    path("${alignment_file}.*"), optional emit: index_out
+    path("${alignment_file}.*"), emit: index
     path(".command.*")
 
     script:
