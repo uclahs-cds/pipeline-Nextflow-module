@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `bgzip` to `index_VCF_tabix` module
 - Add PipeVal generate-checksum module
 - Add `run_validate_PipeVal_with_metadata` method
+- Add SAMtools module to create index files from alignment files.
 
 ### Changed
 - Use `ghcr.io/uclahs-cds` as default registry
