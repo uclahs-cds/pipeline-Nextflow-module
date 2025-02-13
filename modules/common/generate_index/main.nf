@@ -24,7 +24,7 @@ process run_index_SAMtools {
         },
         pattern: ".command.*",
         mode: "copy",
-        saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
+        saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${sample}/log${file(it).getName()}" }
 
     publishDir path: "${options.output_dir}",
         mode: "copy",
@@ -33,7 +33,7 @@ process run_index_SAMtools {
     ext capture_logs: false
 
     input:
-    path(alignment_file)
+    tuple val(sample), path(alignment_file)
 
     output:
     path("${alignment_file}.*"), emit: index
