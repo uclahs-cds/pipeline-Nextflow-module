@@ -20,7 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `bgzip` to `index_VCF_tabix` module
 - Add PipeVal generate-checksum module
 - Add `run_validate_PipeVal_with_metadata` method
-- Add SAMtools module to create index files from alignment files.
+- Add SAMtools module to create index files from alignment files
 
 ### Changed
 - Use `ghcr.io/uclahs-cds` as default registry
@@ -33,3 +33,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Change PipeVal command since the interface was changed.
 - Change indexFile to support cram format type
 - Set `ext.capture_logs` to false for `index_VCF_tabix` processes
+
+### Fixed
+- Fix default log_output_dir in `run_index_SAMtools`
