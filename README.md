@@ -12,14 +12,23 @@
       - [How to use](#how-to-use-1)
     - [Standardized Filename Generator](#standardized-filename-generator)
       - [Description](#description-2)
-      - [Hot to use](#hot-to-use)
+      - [How to use](#how-to-use-2)
     - [PipeVal](#pipeval)
       - [Validate](#validate)
         - [Description](#description-3)
-        - [How to use](#how-to-use-2)
-    - [Index VCF File](#compress-and-index-vcf-file)
-        - [Description](#description-4)
         - [How to use](#how-to-use-3)
+      - [generate-checksum](#generate-checksum)
+        - [Description](#description-4)
+        - [How to use](#how-to-use-4)
+    - [Compress and Index VCF File](#compress-and-index-vcf-file)
+        - [Description](#description-5)
+        - [How to use](#how-to-use-5)
+    - [Return Expected Index File](#return-expected-index-file)
+        - [Description](#description-6)
+        - [How to use](#how-to-use-6)
+    - [SAMtools Index](#samtools-index)
+      - [Description](#description-7)
+      - [How to use](#how-to-use-7)
   - [License](#license)
 
 
@@ -215,6 +224,34 @@ Output:
 1. Add this repository as a submodule in the pipeline of interest.
 2. Include the `indexFile` function from the module `main.nf` with a relative path.
 3. Call the function as needed with the approriate input and use returned value as index file name
+
+### SAMtools Index
+
+Module for indexing SAM/BAM/CRAM alignment files.
+
+Tools used: `samtools`.
+
+#### Description
+
+Inputs:
+ - `sample`: sample identifier to organize process log files.
+ - `alignment_file`: `.bam`, `.cram`, or `.sam` file to be indexed.
+
+input channel structure: tuple[sample, alignment_file]
+
+Parameters:
+ - `output_dir`: directory to store created index file.
+ - `log_output_dir`: directory to store log files.
+ - `main_process`: sets output directory to the specified main process.
+ - `docker_image_version`: SAMtools docker image tag.
+ - `docker_image`: docker image.
+
+#### How to use
+
+1. Add this repository as a submodule in the pipeline of interest.
+2. Include the `run_index_SAMtools` workflow from the module `main.nf` with a relative path.
+3. Use the `addParams` directive when importing to specify any params.
+4. Call the process with the input channel, a tuple with `sample` and `alignment_file`.
 
 ## License
 
