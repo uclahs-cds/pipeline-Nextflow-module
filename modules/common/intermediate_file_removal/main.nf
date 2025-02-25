@@ -22,7 +22,7 @@ process remove_intermediate_files {
     publishDir path: "${options.log_output_dir}",
       pattern: ".command.*",
       mode: "copy",
-      saveAs: { "${task.process.split(':')[-1]}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
+      saveAs: { "${task.process.replace(':', '/')}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
