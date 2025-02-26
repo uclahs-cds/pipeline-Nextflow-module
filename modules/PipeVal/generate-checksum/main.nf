@@ -24,7 +24,7 @@ process generate_checksum_PipeVal {
         },
         pattern: ".command.*",
         mode: "copy",
-        saveAs: { "${task.process.replace(':', '/')}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
+        saveAs: { "${task.process.replace(':', '/').replace('_', '-')}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
     publishDir path: "${options.output_dir}",
         pattern: "*.${options.checksum_alg}",

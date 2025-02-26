@@ -25,7 +25,7 @@ process extract_GenomeIntervals {
     publishDir path: "${options.log_output_dir}/process-log",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/').replace('_', '-')}/log${file(it).getName()}" }
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
