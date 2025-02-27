@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Change PipeVal command since the interface was changed.
 - Change indexFile to support cram format type
 - Set `ext.capture_logs` to false for `index_VCF_tabix` processes
+- Change process logs filename standard from `processName/` to `workflowName/processName`
 
 ### Fixed
 - Fix default log_output_dir in `run_index_SAMtools`

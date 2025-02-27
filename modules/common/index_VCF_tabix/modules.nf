@@ -18,7 +18,7 @@ process check_compression_bgzip {
     publishDir path: "${options.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/')}/${id}/log${file(it).getName()}" }
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
@@ -60,7 +60,7 @@ process uncompress_file_gunzip {
     publishDir path: "${options.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/')}/${id}/log${file(it).getName()}" }
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
@@ -107,7 +107,7 @@ process compress_VCF_bgzip {
     publishDir path: "${options.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/')}/${id}/log${file(it).getName()}" }
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
@@ -152,7 +152,7 @@ process index_VCF_tabix {
     publishDir path: "${options.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}-${id}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/')}/${id}/log${file(it).getName()}" }
     
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
