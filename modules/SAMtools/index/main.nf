@@ -24,7 +24,7 @@ process run_index_SAMtools {
         },
         pattern: ".command.*",
         mode: "copy",
-        saveAs: { "${task.process.replace(':', '/')}-${sample}/log${file(it).getName()}" }
+        saveAs: { "${task.process.replace(':', '/')}/${sample}/log${file(it).getName()}" }
 
     publishDir path: "${options.output_dir}",
         mode: "copy",
