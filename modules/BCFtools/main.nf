@@ -13,12 +13,12 @@ options = initOptions(params.options)
         output_dir:  path    Directory for saving VCF
         log_output_dir:  path    Directory for saving log files
         docker_image_version:    string Version of BCFtools image
-        main_process:    string  (Optional) Name of main output directory
+        @params main_process    string  (Optional) Name of main output directory
 */
 
 process convert_BCF2VCF_BCFtools {
     container options.docker_image
-        publishDir path: { options.main_process ?
+        publishDir path: {options.main_process ?
         "${options.log_output_dir}/process-log/${options.main_process}" :
         "${options.log_output_dir}/process-log/BCFtools-${options.docker_image_version}"
         },
@@ -28,19 +28,15 @@ process convert_BCF2VCF_BCFtools {
 
     publishDir path: "${options.output_dir}",
         mode: "copy",
-        pattern: "${vcf_file}"
-
-    publishDir path: "${options.output_dir}",
-        mode: "copy",
-        pattern: "${vcf_file}.tbi"
+        pattern: "*.vcf.gz"
 
     ext capture_logs: false
 
     input:
-    tuple val(sample), path(bcf_file)
+    tuple val(sample), path(bcf_file), path(bcf_csi)
 
     output:
-    tuple path(${vcf_file}), path("${vcf_file}.tbi"), emit: bcf2vcf
+    path("*.vcf.gz"), emit: bcf2vcf
     path(".command.*")
 
     script:
@@ -48,9 +44,8 @@ process convert_BCF2VCF_BCFtools {
     set -euo pipefail
 
     bcf_file_base=\$(basename ${bcf_file} .bcf)
-    vcf_file =${bcf_file_base}.vcf.gz
+    vcf_file=\${bcf_file_base}.vcf.gz
 
-    bcftools view ${bcf_file} -Oz -o ${vcf_file}
-    bcftools index -t ${vcf_file}
+    bcftools view ${bcf_file} -Oz -o \${vcf_file}
     """
     }
