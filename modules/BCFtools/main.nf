@@ -10,7 +10,7 @@ options = initOptions(params.options)
         bcf_file: a BCF file
 
     params:
-        output_dir:  path    Directory for saving checksums
+        output_dir:  path    Directory for saving VCF
         log_output_dir:  path    Directory for saving log files
         docker_image_version:    string Version of BCFtools image
         main_process:    string  (Optional) Name of main output directory
