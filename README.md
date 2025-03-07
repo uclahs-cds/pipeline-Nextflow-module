@@ -29,6 +29,9 @@
     - [SAMtools Index](#samtools-index)
       - [Description](#description-7)
       - [How to use](#how-to-use-7)
+    - [BCFtools BCF2VCF](#bcftools-bcf2vcf)
+      - [Description](#description-8)
+      - [How to use](#how-to-use-8)
   - [License](#license)
 
 
@@ -252,6 +255,35 @@ Parameters:
 2. Include the `run_index_SAMtools` workflow from the module `main.nf` with a relative path.
 3. Use the `addParams` directive when importing to specify any params.
 4. Call the process with the input channel, a tuple with `sample` and `alignment_file`.
+
+### BCFtools BCF2VCF
+
+Module for converting a BCF to a VCF file.
+
+Tools used: `bcftools`.
+
+#### Description
+
+Inputs:
+ - `sample`: sample identifier to organize process log files.
+ - `bcf_file`: `.bcf` file to be converted.
+ - `bcf_index`: `.bcf.csi` or `.bcf.tbi` index for the `.bcf` file.
+
+input channel structure: tuple[sample, bcf_file, bcf_index]
+
+Parameters:
+ - `output_dir`: directory to store converted VCF file.
+ - `log_output_dir`: directory to store log files.
+ - `main_process`: sets output directory to the specified main process.
+ - `docker_image_version`: BCFtools docker image tag.
+ - `docker_image`: docker image.
+
+#### How to use
+
+1. Add this repository as a submodule in the pipeline of interest.
+2. Include the `convert_BCF2VCF_BCFtools` workflow from the module `main.nf` with a relative path.
+3. Use the `addParams` directive when importing to specify any params.
+4. Call the process with the input channel, a tuple with `sample`, `bcf_file` and `bcf_index`.
 
 ## License
 
