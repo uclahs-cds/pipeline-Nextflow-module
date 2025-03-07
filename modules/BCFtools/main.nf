@@ -36,7 +36,7 @@ process convert_BCF2VCF_BCFtools {
     tuple val(sample), path(bcf_file), path(bcf_csi)
 
     output:
-    path("*.vcf.gz"), emit: bcf2vcf
+    path("*.vcf.gz"), emit: vcf
     path(".command.*")
 
     script:
