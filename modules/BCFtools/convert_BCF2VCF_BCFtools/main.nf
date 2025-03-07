@@ -33,7 +33,7 @@ process convert_BCF2VCF_BCFtools {
     ext capture_logs: false
 
     input:
-    tuple val(sample), path(bcf_file), path(bcf_csi)
+    tuple val(sample), path(bcf_file), path(bcf_index)
 
     output:
     path("*.vcf.gz"), emit: vcf
