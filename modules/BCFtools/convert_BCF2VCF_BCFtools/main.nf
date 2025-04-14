@@ -13,15 +13,11 @@ options = initOptions(params.options)
         output_dir:  path    Directory for saving VCF
         log_output_dir:  path    Directory for saving log files
         docker_image_version:    string Version of BCFtools image
-        @params main_process    string  (Optional) Name of main output directory
 */
 
 process convert_BCF2VCF_BCFtools {
     container options.docker_image
-        publishDir path: {options.main_process ?
-        "${options.log_output_dir}/process-log/${options.main_process}" :
-        "${options.log_output_dir}/process-log/BCFtools-${options.docker_image_version}"
-        },
+        publishDir path: "${options.log_output_dir}",
         pattern: ".command.*",
         mode: "copy",
         saveAs: { "${task.process.replace(':', '/')}/${sample}/log${file(it).getName()}" }
