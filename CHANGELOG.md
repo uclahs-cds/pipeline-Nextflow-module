@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add SAMtools module to create index files from alignment files
 
 ### Changed
+- Update publish dir path for `convert_BCF2VCF_BCFtools` log
 - Use `ghcr.io/uclahs-cds` as default registry
 - Initial pipeline set up
 - Update log output directory for intermediate file removal
