@@ -1,8 +1,3 @@
-include { initOptions } from './functions.nf'
-
-params.options = [:]
-options = initOptions(params.options)
-
 /*
     Nextflow module generating index files
 
@@ -17,11 +12,8 @@ options = initOptions(params.options)
 */
 
 process run_index_SAMtools {
-    container options.docker_image
-        publishDir path: { META.containsKey("main_process") ?
-        "${META.log_output_dir}/process-log/${META.main_process}" :
-        "${META.log_output_dir}/process-log/SAMtools-${META.docker_image_version}"
-        },
+    container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/samtools:1.21')}"
+    publishDir path: "${META.log_output_dir}",
         pattern: ".command.*",
         mode: "copy",
         saveAs: { "${task.process.replace(':', '/')}/${META.id}/log${file(it).getName()}" }
