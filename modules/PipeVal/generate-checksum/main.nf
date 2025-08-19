@@ -1,11 +1,7 @@
-include { initOptions } from './functions.nf'
-
-params.options = [:]
-options = initOptions(params.options)
-
 /**
 *   Nextflow module for generating checksums
 *
+*   @input META val Dictionary of metadata for running process
 *   @input  file_to_validate    path    File to generate checksum
 *
 *   @params output_dir  path    Directory for saving checksums
@@ -15,40 +11,40 @@ options = initOptions(params.options)
 *   @params main_process    string  (Optional) Name of main output directory
 */
 process generate_checksum_PipeVal {
-    container options.docker_image
-    label options.process_label
+    container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/pipeval:5.0.0-rc.3')}"
 
-    publishDir path: { options.main_process ?
-        "${options.log_output_dir}/process-log/${options.main_process}" :
-        "${options.log_output_dir}/process-log/PipeVal-${options.docker_image_version}"
-        },
+    label "${META.getOrDefault('process_label', 'none')}"
+
+    publishDir path: "${META.log_output_dir}",
         pattern: ".command.*",
         mode: "copy",
         saveAs: { "${task.process.replace(':', '/')}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
 
-    publishDir path: "${options.output_dir}",
-        pattern: "*.${options.checksum_alg}",
+    publishDir path: "${META.output_dir}",
+        pattern: "*.${checksum_alg}",
         mode: "copy"
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
 
     input:
-        path(input_file)
+        tuple val(META), path(input_file)
 
     output:
         path(".command.*")
-        path("*.${options.checksum_alg}")
+        tuple val(META), path("*.${checksum_alg}")
 
     script:
+    checksum_alg = META.getOrDefault('checksum_alg', 'sha512')
+    extra_args = META.getOrDefault('validate_extra_args', '')
     """
     set -euo pipefail
 
     if command -v pipeval &> /dev/null
     then
-        pipeval generate-checksum -t ${options.checksum_alg} ${input_file} ${options.checksum_extra_args}
+        pipeval generate-checksum -t ${checksum_alg} ${input_file} ${extra_args}
     else
-        generate-checksum -t ${options.checksum_alg} ${input_file} ${options.checksum_extra_args}
+        generate-checksum -t ${checksum_alg} ${input_file} ${extra_args}
     fi
     """
 }
