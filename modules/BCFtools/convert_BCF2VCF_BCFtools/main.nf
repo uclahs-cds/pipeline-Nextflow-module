@@ -2,6 +2,7 @@
     Nextflow module converting a BCF to a VCF file
 
     input:
+        META: dictionary of metadata for running process
         bcf_file: a BCF file
 
     params:
