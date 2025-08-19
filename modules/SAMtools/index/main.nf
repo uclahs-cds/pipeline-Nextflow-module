@@ -2,6 +2,7 @@
     Nextflow module generating index files
 
     input:
+        META: dictionary of metadata for running process
         alignment_file: a BAM or CRAM alignment file
 
     params:
