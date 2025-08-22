@@ -1,8 +1,3 @@
-include { initOptions } from './functions.nf'
-
-params.options = [:]
-options = initOptions(params.options)
-
 /*
     Nextflow module for checking if file is bgzip compressed.
 
@@ -14,20 +9,20 @@ options = initOptions(params.options)
 */
 
 process check_compression_bgzip {
-    container options.docker_image
-    publishDir path: "${options.log_output_dir}",
+    container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/samtools:1.21')}"
+    publishDir path: "${META.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}/${id}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/')}/${META.id}/log${file(it).getName()}" }
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
 
     input:
-    tuple val(id), path(file_to_check)
+    tuple val(META), path(file_to_check)
 
     output:
-    tuple val(id), path(file_to_check), env(IS_COMPRESSED), emit: checked_files
+    tuple val(META), path(file_to_check), env(IS_COMPRESSED), emit: checked_files
     path ".command.*"
 
     shell '/bin/bash', '-uo', 'pipefail'
@@ -56,20 +51,20 @@ process check_compression_bgzip {
 */
 
 process uncompress_file_gunzip {
-    container options.docker_image
-    publishDir path: "${options.log_output_dir}",
+    container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/samtools:1.21')}"
+    publishDir path: "${META.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}/${id}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/')}/${META.id}/log${file(it).getName()}" }
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
 
     input:
-    tuple val(id), path(file_to_uncompress)
+    tuple val(META), path(file_to_uncompress)
 
     output:
-    tuple val(id), path(uncompressed_file), emit: uncompressed_files
+    tuple val(META), path(uncompressed_file), emit: uncompressed_files
     path ".command.*"
 
     script:
@@ -93,36 +88,49 @@ process uncompress_file_gunzip {
         save_intermediate_files: bool.
         bgzip_extra_args: string(extra options for bgzip)
 */
-
 process compress_VCF_bgzip {
-    container options.docker_image
-    publishDir path: "${options.output_dir}/output",
+    container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/samtools:1.21')}"
+
+    publishDir path: "${META.output_dir}/output",
                mode: "copy",
-               pattern: "*.gz",
-               enabled: options.is_output_file
-    publishDir path: "${options.output_dir}/intermediate/${task.process.replace(':', '/')}",
+               pattern: "*.gzOUTPUT",
+               saveAs: { "${file(it).getName().replace('gzOUTPUT', 'gz')}" }
+    publishDir path: "${META.output_dir}/intermediate/${task.process.replace(':', '/')}",
                mode: "copy",
-               pattern: "*.gz",
-               enabled: !options.is_output_file && options.save_intermediate_files
-    publishDir path: "${options.log_output_dir}",
+               pattern: "*.gzINTERMEDIATE",
+               saveAs: { "${file(it).getName().replace('gzINTERMEDIATE', 'gz')}" }
+    publishDir path: "${META.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}/${id}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/')}/${META.id}/log${file(it).getName()}" }
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
 
     input:
-    tuple val(id), path(file_to_compress)
+    tuple val(META), path(file_to_compress)
 
     output:
-    tuple val(id), path("*.gz") , emit: vcf_gz
+    tuple val(META), path("*.gz") , emit: vcf_gz
+    path("*.gz{OUTPUT,INTERMEDIATE}"), optional: true
     path ".command.*"
 
     script:
+    is_output_file = META.getOrDefault('is_output_file', true)
+    save_as_intermediate = !is_output_file && params.getOrDefault('save_intermediate_files', false)
     """
     set -euo pipefail
-    bgzip ${options.bgzip_extra_args} ${file_to_compress}
+    bgzip ${META.getOrDefault('bgzip_extra_args', ''} ${file_to_compress}
+
+    if ${is_output_file}
+    then
+        cp ${file_to_compress}.gz ${file_to_compress}.gzOUTPUT
+    fi
+
+    if ${save_as_intermediate}
+    then
+        cp ${file_to_compress}.gz ${file_to_compress}.gzINTERMEDIATE
+    fi
     """
 }
 
@@ -138,35 +146,53 @@ process compress_VCF_bgzip {
         save_intermediate_files: bool.
         tabix_extra_args: string(extra options used to index VCF)
 */
-
 process index_VCF_tabix {
-    container options.docker_image
-    publishDir path: "${options.output_dir}/output",
+    container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/samtools:1.21')}"
+    publishDir path: "${META.output_dir}/output",
                mode: "copy",
-               pattern: "*.{tbi,csi}",
-               enabled: options.is_output_file
-    publishDir path: "${options.output_dir}/intermediate/${task.process.replace(':', '/')}",
+               pattern: "*.{tbi,csi}OUTPUT",
+               saveAs: { "${file(it).getName().replace('OUTPUT', '')}" }
+    publishDir path: "${META.output_dir}/intermediate/${task.process.replace(':', '/')}",
                mode: "copy",
-               pattern: "*.{tbi,csi}",
-               enabled: !options.is_output_file && options.save_intermediate_files
-    publishDir path: "${options.log_output_dir}",
+               pattern: "*.{tbi,csi}INTERMEDIATE",
+               saveAs: { "${file(it).getName().replace('INTERMEDIATE', '')}" }
+    publishDir path: "${META.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}/${id}/log${file(it).getName()}" }
+               saveAs: { "${task.process.replace(':', '/')}/${META.id}/log${file(it).getName()}" }
     
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
 
     input:
-    tuple val(id), path(file_to_index)
+    tuple val(META), path(file_to_index)
 
     output:
-    tuple val(id), path(file_to_index), path("*.{tbi,csi}"), emit: index_out
+    tuple val(META), path(file_to_index), path("*.{tbi,csi}"), emit: index_out
+    path("*{OUTPUT,INTERMEDIATE}"), optional: true
     path ".command.*"
 
     script:
+    is_output_file = META.getOrDefault('is_output_file', true)
+    save_as_intermediate = !is_output_file && params.getOrDefault('save_intermediate_files', false)
     """
     set -euo pipefail
-    tabix ${options.tabix_extra_args} -p \$(basename $file_to_index .gz | tail -c 4) $file_to_index
+    tabix ${META.getOrDefault('tabix_extra_args', ''}-p \$(basename $file_to_index .gz | tail -c 4) $file_to_index
+
+    if ${is_output_file}
+    then
+        for a_file in *{tbi,csi}
+        do
+            cp \$a_file \${a_file}OUTPUT
+        done
+    fi
+
+    if ${save_as_intermediate}
+    then
+        for a_file in *{tbi,csi}
+        do
+            cp \$a_file \${a_file}INTERMEDIATE
+        done
+    fi
     """
 }
