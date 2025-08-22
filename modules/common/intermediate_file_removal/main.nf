@@ -1,8 +1,3 @@
-include { initOptions } from './functions.nf'
-
-params.options = [:]
-options = initOptions(params.options)
-
 /*
     Nextflow module for removing intermediate files. Follows symlinks to remove original files.
 
@@ -16,10 +11,9 @@ options = initOptions(params.options)
         params.save_intermediate_files: bool.
 */
 process remove_intermediate_files {
-    container options.docker_image
-    label options.process_label
+    container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/pipeval:5.0.0-rc.3')}"
 
-    publishDir path: "${options.log_output_dir}",
+    publishDir path: "${META.log_output_dir}",
       pattern: ".command.*",
       mode: "copy",
       saveAs: { "${task.process.replace(':', '/')}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
@@ -28,14 +22,14 @@ process remove_intermediate_files {
     ext capture_logs: false
 
     input:
-    path(input_file_to_remove), stageAs: "delete.file"
+    tuple val(META), path(input_file_to_remove, stageAs: "delete.file")
     val(ready_for_deletion_signal)
 
     output:
     path(".command.*")
 
     when:
-    !options.save_intermediate_files
+    !params.getOrDefault('save_intermediate_files', false)
 
     script:
     file_to_remove = "delete.file"
