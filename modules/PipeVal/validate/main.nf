@@ -11,8 +11,6 @@
 process run_validate_PipeVal {
     container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/pipeval:5.0.0-rc.3')}"
 
-    label "${META.getOrDefault('process_label', 'none')}"
-
     publishDir path: "${META.log_output_dir}/process-log",
         pattern: ".command.*",
         mode: "copy",
