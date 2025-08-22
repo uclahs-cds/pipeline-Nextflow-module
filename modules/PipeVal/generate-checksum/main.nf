@@ -15,7 +15,7 @@ process generate_checksum_PipeVal {
 
     label "${META.getOrDefault('process_label', 'none')}"
 
-    publishDir path: "${META.log_output_dir}",
+    publishDir path: "${META.log_output_dir}/process-log",
         pattern: ".command.*",
         mode: "copy",
         saveAs: { "${task.process.replace(':', '/')}/${task.process.split(':')[-1]}-${task.index}/log${file(it).getName()}" }
