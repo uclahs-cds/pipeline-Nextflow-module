@@ -28,7 +28,7 @@ workflow compress_index_VCF {
             .branch{
                 recompress: it[0].getOrDefault('unzip_and_rezip', false)
                     return it
-                passthrough: !it[0].getOrDefault('unzip_and_rezip', false)
+                passthrough: true
                     return it
             }
             .set{ processing_split_files }
