@@ -21,9 +21,6 @@ workflow compress_index_VCF {
             }
             .set{ checked_files }
 
-        checked_files.uncompressed_files
-            .set{ input_ch_compress }
-
         checked_files.compressed_files
             .branch{
                 recompress: it[0].getOrDefault('unzip_and_rezip', false)
@@ -36,7 +33,7 @@ workflow compress_index_VCF {
         uncompress_file_gunzip(processing_split_files.recompress)
 
         uncompress_file_gunzip.out.uncompressed_files
-            .mix(input_ch_compress)
+            .mix(checked_files.uncompressed_files)
             .set{ input_ch_compress }
 
         compress_VCF_bgzip(input_ch_compress)
