@@ -91,14 +91,15 @@ process uncompress_file_gunzip {
 process compress_VCF_bgzip {
     container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/samtools:1.21')}"
 
-    publishDir path: "${META.output_dir}/output",
-               mode: "copy",
-               pattern: "*.gzOUTPUT",
-               saveAs: { "${file(it).getName().replace('gzOUTPUT', 'gz')}" }
-    publishDir path: "${META.output_dir}/intermediate/${task.process.replace(':', '/')}",
-               mode: "copy",
-               pattern: "*.gzINTERMEDIATE",
-               saveAs: { "${file(it).getName().replace('gzINTERMEDIATE', 'gz')}" }
+    publishDir path: "${
+            META.getOrDefault('is_output_file', true)
+            ? META.output_dir + "/output"
+            : META.output_dir + "/intermediate/" + task.process.replace(':', '/')
+        }",
+        mode: "copy",
+        enabled: "${META.getOrDefault('is_output_file', true) || META.getOrDefault('save_intermediate_files', false) }",
+        pattern: "*.gz"
+
     publishDir path: "${META.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
@@ -116,21 +117,9 @@ process compress_VCF_bgzip {
     path ".command.*"
 
     script:
-    is_output_file = META.getOrDefault('is_output_file', true)
-    save_as_intermediate = !is_output_file && params.getOrDefault('save_intermediate_files', false)
     """
     set -euo pipefail
     bgzip ${META.getOrDefault('bgzip_extra_args', ''} ${file_to_compress}
-
-    if ${is_output_file}
-    then
-        cp ${file_to_compress}.gz ${file_to_compress}.gzOUTPUT
-    fi
-
-    if ${save_as_intermediate}
-    then
-        cp ${file_to_compress}.gz ${file_to_compress}.gzINTERMEDIATE
-    fi
     """
 }
 
@@ -148,14 +137,16 @@ process compress_VCF_bgzip {
 */
 process index_VCF_tabix {
     container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/samtools:1.21')}"
-    publishDir path: "${META.output_dir}/output",
-               mode: "copy",
-               pattern: "*.{tbi,csi}OUTPUT",
-               saveAs: { "${file(it).getName().replace('OUTPUT', '')}" }
-    publishDir path: "${META.output_dir}/intermediate/${task.process.replace(':', '/')}",
-               mode: "copy",
-               pattern: "*.{tbi,csi}INTERMEDIATE",
-               saveAs: { "${file(it).getName().replace('INTERMEDIATE', '')}" }
+
+    publishDir path: "${
+            META.getOrDefault('is_output_file', true)
+            ? META.output_dir + "/output"
+            : META.output_dir + "/intermediate/" + task.process.replace(':', '/')
+        }",
+        mode: "copy",
+        enabled: "${META.getOrDefault('is_output_file', true) || META.getOrDefault('save_intermediate_files', false) }",
+        pattern: "*.{tbi,csi}"
+
     publishDir path: "${META.log_output_dir}",
                mode: "copy",
                pattern: ".command.*",
@@ -177,22 +168,6 @@ process index_VCF_tabix {
     save_as_intermediate = !is_output_file && params.getOrDefault('save_intermediate_files', false)
     """
     set -euo pipefail
-    tabix ${META.getOrDefault('tabix_extra_args', ''}-p \$(basename $file_to_index .gz | tail -c 4) $file_to_index
-
-    if ${is_output_file}
-    then
-        for a_file in *{tbi,csi}
-        do
-            cp \$a_file \${a_file}OUTPUT
-        done
-    fi
-
-    if ${save_as_intermediate}
-    then
-        for a_file in *{tbi,csi}
-        do
-            cp \$a_file \${a_file}INTERMEDIATE
-        done
-    fi
+    tabix ${META.getOrDefault('tabix_extra_args', ''} -p \$(basename $file_to_index .gz | tail -c 4) $file_to_index
     """
 }
