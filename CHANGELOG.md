@@ -1,14 +1,15 @@
 # Changelog
+
 All notable changes to pipeline-Nextflow-module.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
----
+## [1.0.0] - 2025-08-25
 
-## [Unreleased]
 ### Added
+
 - Add `convert_BCF2VCF_BCFtools` module
 - Add `indexFile` module to return index file path
 - Add intermediate file/directory removal module
@@ -24,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add SAMtools module to create index files from alignment files
 
 ### Changed
+
 - Update publish dir path for `convert_BCF2VCF_BCFtools` log
 - Use `ghcr.io/uclahs-cds` as default registry
 - Initial pipeline set up
@@ -38,4 +40,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Change process logs filename standard from `processName/` to `workflowName/processName`
 
 ### Fixed
+
 - Fix default log_output_dir in `run_index_SAMtools`
+
+[1.0.0]: https://github.com/uclahs-cds/pipeline-Nextflow-module/releases/tag/v1.0.0
