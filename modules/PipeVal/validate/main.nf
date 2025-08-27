@@ -1,7 +1,11 @@
 /**
 *   Nextflow module for validating files and directories
 *
-*   @input META val Dictionary of metadata for running process
+*   @input META val Dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+*       Available key definitions:
+*           docker_image (optional): String
+*           log_output_dir (required): String
+*           validate_extra_args (optional): String
 *   @input  file_to_validate    path    File or directory to validate
 *
 *   @params log_output_dir  path    Directory for saving log files

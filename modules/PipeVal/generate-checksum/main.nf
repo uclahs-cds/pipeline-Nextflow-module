@@ -1,7 +1,13 @@
 /**
 *   Nextflow module for generating checksums
 *
-*   @input META val Dictionary of metadata for running process
+*   @input META val Dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+*       Available key definitions:
+*           docker_image (optional): String
+*           log_output_dir (required): String
+*           output_dir (required): String
+*           checksum_alg (optional): String
+*           checksum_extra_args (optional): String
 *   @input  file_to_validate    path    File to generate checksum
 *
 *   @params output_dir  path    Directory for saving checksums
@@ -34,7 +40,7 @@ process generate_checksum_PipeVal {
 
     script:
     checksum_alg = META.getOrDefault('checksum_alg', 'sha512')
-    extra_args = META.getOrDefault('validate_extra_args', '')
+    extra_args = META.getOrDefault('checksum_extra_args', '')
     """
     set -euo pipefail
 

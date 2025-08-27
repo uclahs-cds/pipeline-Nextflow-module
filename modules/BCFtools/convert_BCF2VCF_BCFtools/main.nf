@@ -2,7 +2,12 @@
     Nextflow module converting a BCF to a VCF file
 
     input:
-        META: dictionary of metadata for running process
+        META: dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+            Available key definitions:
+                docker_image (optional): String
+                log_output_dir (required): String
+                output_dir (required): String
+                id (required): String
         bcf_file: a BCF file
 
     params:
