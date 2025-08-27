@@ -2,10 +2,12 @@
     Nextflow module for checking if file is bgzip compressed.
 
     input:
+        META: dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+            Available key definitions:
+                docker_image (optional): String
+                log_output_dir (required): String
+                id (required): String
         file_to_check: path to the file
-        id: string identifying the sample_id of the file
-    params:
-        log_output_dir: string(path)
 */
 
 process check_compression_bgzip {
@@ -44,10 +46,12 @@ process check_compression_bgzip {
     Nextflow module for uncompressing bgzip-ed file.
 
     input:
+        META: dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+            Available key definitions:
+                docker_image (optional): String
+                log_output_dir (required): String
+                id (required): String
         file_to_uncompress: path to the file
-        id: string identifying the sample_id of the file
-    params:
-        log_output_dir: string(path)
 */
 
 process uncompress_file_gunzip {
@@ -80,13 +84,16 @@ process uncompress_file_gunzip {
     Nextflow module for compressing VCF files, including: gff and vcf.
 
     input:
+        META: dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+            Available key definitions:
+                docker_image (optional): String
+                log_output_dir (required): String
+                output_dir (required): String
+                id (required): String
+                is_output_file (optional): Boolean
+                save_intermediate_files (optional): Boolean
+                bgzip_extra_args (optional): String
         file_to_compress: path to the VCF file
-        id: string identifying the sample_id of the VCF
-    params:
-        output_dir: string(path)
-        log_output_dir: string(path)
-        save_intermediate_files: bool.
-        bgzip_extra_args: string(extra options for bgzip)
 */
 process compress_VCF_bgzip {
     container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/samtools:1.21')}"
@@ -113,7 +120,6 @@ process compress_VCF_bgzip {
 
     output:
     tuple val(META), path("*.gz") , emit: vcf_gz
-    path("*.gz{OUTPUT,INTERMEDIATE}"), optional: true
     path ".command.*"
 
     script:
@@ -127,6 +133,15 @@ process compress_VCF_bgzip {
     Nextflow module for index VCF files, including: gff and vcf.
 
     input:
+        META: dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+            Available key definitions:
+                docker_image (optional): String
+                log_output_dir (required): String
+                output_dir (required): String
+                id (required): String
+                is_output_file (optional): Boolean
+                save_intermediate_files (optional): Boolean
+                tabix_extra_args (optional): String
         file_to_index: path to the VCF file
         id: string identifying the sample_id of the indexed VCF
     params:
@@ -160,12 +175,9 @@ process index_VCF_tabix {
 
     output:
     tuple val(META), path(file_to_index), path("*.{tbi,csi}"), emit: index_out
-    path("*{OUTPUT,INTERMEDIATE}"), optional: true
     path ".command.*"
 
     script:
-    is_output_file = META.getOrDefault('is_output_file', true)
-    save_as_intermediate = !is_output_file && params.getOrDefault('save_intermediate_files', false)
     """
     set -euo pipefail
     tabix ${META.getOrDefault('tabix_extra_args', ''} -p \$(basename $file_to_index .gz | tail -c 4) $file_to_index

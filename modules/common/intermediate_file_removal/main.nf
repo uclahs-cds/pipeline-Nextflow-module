@@ -2,6 +2,10 @@
     Nextflow module for removing intermediate files. Follows symlinks to remove original files.
 
     input:
+        META: dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+            Available key definitions:
+                docker_image (optional): String
+                log_output_dir (required): String
         file_to_remove: path to file to be removed
         ready_for_deletion_signal: val to indicate that deletion can proceed.
             Included for cases where multiple processes are using the intermediate files.
