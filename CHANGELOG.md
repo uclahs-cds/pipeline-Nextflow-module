@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.0.0] - 2025-08-28
 
+### Changed
+
+- Refactor `addParams` usage to metadata-as-input
+
 ## [1.0.0] - 2025-08-25
 
 ### Added
@@ -40,7 +44,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Change indexFile to support cram format type
 - Set `ext.capture_logs` to false for `index_VCF_tabix` processes
 - Change process logs filename standard from `processName/` to `workflowName/processName`
-- Refactor `addParams` usage to metadata-as-input
 
 ### Fixed
 
