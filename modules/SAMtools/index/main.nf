@@ -1,12 +1,13 @@
-include { initOptions } from './functions.nf'
-
-params.options = [:]
-options = initOptions(params.options)
-
 /*
     Nextflow module generating index files
 
     input:
+        META: dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+            Available key definitions:
+                docker_image (optional): String
+                log_output_dir (required): String
+                output_dir (required): String
+                id (required): String
         alignment_file: a BAM or CRAM alignment file
 
     params:
@@ -17,26 +18,23 @@ options = initOptions(params.options)
 */
 
 process run_index_SAMtools {
-    container options.docker_image
-        publishDir path: { options.main_process ?
-        "${options.log_output_dir}/process-log/${options.main_process}" :
-        "${options.log_output_dir}/process-log/SAMtools-${options.docker_image_version}"
-        },
+    container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/samtools:1.21')}"
+    publishDir path: "${META.log_output_dir}/process-log",
         pattern: ".command.*",
         mode: "copy",
-        saveAs: { "${task.process.replace(':', '/')}/${sample}/log${file(it).getName()}" }
+        saveAs: { "${task.process.replace(':', '/')}/${META.id}/log${file(it).getName()}" }
 
-    publishDir path: "${options.output_dir}",
+    publishDir path: "${META.output_dir}",
         mode: "copy",
         pattern: "${alignment_file}.*"
 
     ext capture_logs: false
 
     input:
-    tuple val(sample), path(alignment_file)
+    tuple val(META), path(alignment_file)
 
     output:
-    path("${alignment_file}.*"), emit: index
+    tuple val(META), path("${alignment_file}.*"), emit: index
     path(".command.*")
 
     script:

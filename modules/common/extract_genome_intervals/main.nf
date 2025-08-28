@@ -1,12 +1,12 @@
-include { initOptions } from './functions.nf'
-
-params.options = [:]
-options = initOptions(params.options)
-
 /*
     Nextflow module for extracting genome intervals from reference dictionary
 
     input:
+        META: dictionary of metadata for running process; any given metadata will be treated as immutable and passed through the process
+            Available key definitions:
+                docker_image (optional): String
+                log_output_dir (required): String
+                output_dir (required): String
         reference_dict: path to .dict associated with reference genome
 
     params:
@@ -15,26 +15,25 @@ options = initOptions(params.options)
         params.save_intermediate_files: bool.
 */
 process extract_GenomeIntervals {
-    container options.docker_image
-    label options.process_label
+    container "${META.getOrDefault('docker_image', 'ghcr.io/uclahs-cds/pipeval:5.0.0-rc.3')}"
 
-    publishDir path: "${options.output_dir}/intermediate/${task.process.replace(':', '/')}",
-               mode: "copy",
-               pattern: "genomic_intervals.list",
-               enabled: options.save_intermediate_files
-    publishDir path: "${options.log_output_dir}/process-log",
-               mode: "copy",
-               pattern: ".command.*",
-               saveAs: { "${task.process.replace(':', '/')}/log${file(it).getName()}" }
+    publishDir path: "${META.output_dir}/intermediate/${task.process.replace(':', '/')}",
+        mode: "copy",
+        pattern: "genomic_intervals.list",
+        enabled: params.getOrDefault('save_intermediate_files', false)
+    publishDir path: "${META.log_output_dir}/process-log",
+        mode: "copy",
+        pattern: ".command.*",
+        saveAs: { "${task.process.replace(':', '/')}/log${file(it).getName()}" }
 
     // This process uses the publishDir method to save the log files
     ext capture_logs: false
 
     input:
-    path(reference_dict)
+    tuple val(META), path(reference_dict)
 
     output:
-    path("genomic_intervals.list"), emit: genomic_intervals
+    tuple val(META), path("genomic_intervals.list"), emit: genomic_intervals
     path(".command.*")
 
     script:

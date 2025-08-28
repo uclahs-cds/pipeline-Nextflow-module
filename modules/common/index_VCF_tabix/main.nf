@@ -4,10 +4,6 @@ include {
     check_compression_bgzip
     uncompress_file_gunzip
     } from './modules.nf'
-include { initOptions } from './functions.nf'
-
-params.options = [:]
-options = initOptions(params.options)
 
 workflow compress_index_VCF {
     take:
@@ -25,27 +21,26 @@ workflow compress_index_VCF {
             }
             .set{ checked_files }
 
-        checked_files.uncompressed_files
+        checked_files.compressed_files
+            .branch{
+                recompress: it[0].getOrDefault('unzip_and_rezip', false)
+                    return it
+                passthrough: true
+                    return it
+            }
+            .set{ processing_split_files }
+
+        uncompress_file_gunzip(processing_split_files.recompress)
+
+        uncompress_file_gunzip.out.uncompressed_files
+            .mix(checked_files.uncompressed_files)
             .set{ input_ch_compress }
-
-        if (options.unzip_and_rezip) {
-            uncompress_file_gunzip(checked_files.compressed_files)
-
-            uncompress_file_gunzip.out.uncompressed_files
-                .mix(input_ch_compress)
-                .set{ input_ch_compress }
-        }
 
         compress_VCF_bgzip(input_ch_compress)
 
         compress_VCF_bgzip.out.vcf_gz
+            .mix(processing_split_files.passthrough)
             .set{ input_ch_index }
-
-        if (!options.unzip_and_rezip) {
-            checked_files.compressed_files
-                .mix(input_ch_index)
-                .set{ input_ch_index }
-        }
 
         index_VCF_tabix(input_ch_index)
 
