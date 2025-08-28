@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-08-28
+
 ## [1.0.0] - 2025-08-25
 
 ### Added
@@ -45,3 +47,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix default log_output_dir in `run_index_SAMtools`
 
 [1.0.0]: https://github.com/uclahs-cds/pipeline-Nextflow-module/releases/tag/v1.0.0
+[2.0.0]: https://github.com/uclahs-cds/pipeline-Nextflow-module/compare/v1.0.0...v2.0.0
