@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-08-28
+
+### Changed
+
+- Refactor `addParams` usage to metadata-as-input
+
 ## [1.0.0] - 2025-08-25
 
 ### Added
@@ -38,10 +44,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Change indexFile to support cram format type
 - Set `ext.capture_logs` to false for `index_VCF_tabix` processes
 - Change process logs filename standard from `processName/` to `workflowName/processName`
-- Refactor `addParams` usage to metadata-as-input
 
 ### Fixed
 
 - Fix default log_output_dir in `run_index_SAMtools`
 
 [1.0.0]: https://github.com/uclahs-cds/pipeline-Nextflow-module/releases/tag/v1.0.0
+[2.0.0]: https://github.com/uclahs-cds/pipeline-Nextflow-module/compare/v1.0.0...v2.0.0
